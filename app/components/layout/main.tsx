@@ -1,4 +1,5 @@
 import { Button } from "../ui/button";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Main() {
 	return (
@@ -12,6 +13,7 @@ export default function Main() {
 			<Button variant="ghost"> ghost </Button>
 			<Button variant="link"> link </Button>
 			<Button variant="gradient"> gradient </Button>
+			<UserButton />
 		</div>
 	);
 }
