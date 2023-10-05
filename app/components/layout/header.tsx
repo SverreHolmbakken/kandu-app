@@ -12,13 +12,12 @@ function Header() {
 		<div className="flex flex-row w-full justify-between items-center py-2 px-36 bg-transparent">
 			<Link href="/" className="flex flex-row items-center gap-6">
 				<img src="/kandu-logo.svg" alt="" />
-				<h1 className="text-slate-900 font-bold text-3xl">Kandu</h1>
+				<h1 className="text-primaryDark font-bold text-3xl">Kandu</h1>
 			</Link>
 
 			{!isSignedIn && (
 				<Button>
 					<Link href="/sign-in">Sign in</Link>
-
 				</Button>
 			)}
 
