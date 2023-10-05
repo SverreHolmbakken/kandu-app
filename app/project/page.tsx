@@ -1,6 +1,35 @@
-import React from "react";
-import Header from "../components/layout/header";
+import { UserButton } from "@clerk/nextjs";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
+import { Plus } from "lucide-react";
 
 export default function Project() {
-  return <Header />;
+  return (
+    <div className="w-screen h-[52px] px-28 py-2.5 justify-between items-center inline-flex">
+      <div className="text-black text-xl font-medium font-['Inter'] leading-none">
+        Project title
+      </div>
+      <div className="w-20 h-8 relative">
+        <div className="w-8 h-8 left-[48px] top-0 absolute">
+          <Avatar>
+            <UserButton />
+          </Avatar>
+        </div>
+        <div className="w-8 h-8 left-[32px] top-0 absolute">
+          <Avatar>
+            <UserButton />
+          </Avatar>
+        </div>
+        <div className="w-8 h-8 left-[16px] top-0 absolute">
+          <Avatar>
+            <UserButton />
+          </Avatar>
+        </div>
+        <div className="w-8 h-8 left-0 top-0 absolute">
+          <div className="w-8 h-8 bg-slate-200 rounded-full flex justify-center items-center">
+            <Plus className="w-4 h-4" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
