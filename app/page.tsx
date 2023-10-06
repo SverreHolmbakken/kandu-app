@@ -16,7 +16,10 @@ export default function Home() {
 	useEffect(() => {
 		const loadTasks = async () => {
 			const token = await getToken({ template: "supabase" });
-			const tasks = await getTasks({ userId: userId, token: token });
+			const tasks = await getTasks({
+				userId: userId ?? "",
+				token: token ?? "",
+			});
 			setTasks(tasks || []);
 		};
 		loadTasks();
@@ -26,9 +29,8 @@ export default function Home() {
 		const loadBoards = async () => {
 			const token = await getToken({ template: "supabase" });
 			const boards = await getBoards({
-				userId: userId,
-				token: token,
-				boardId: 1,
+				userId: userId ?? "",
+				token: token ?? "",
 			});
 			setBoards(boards || []);
 		};
