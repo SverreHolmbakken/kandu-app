@@ -35,7 +35,7 @@ export default function Project() {
                   <Plus className="w-4 h-4" />
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent side="bottom">
                 <p>Invite collaborators</p>
               </TooltipContent>
             </Tooltip>
