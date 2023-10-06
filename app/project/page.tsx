@@ -14,6 +14,8 @@ export default function Project() {
       <div className="text-black text-xl font-medium font-['Inter'] leading-none">
         Project title
       </div>
+
+      {/* TODO: API to fetch user avatar */}
       <div className="w-20 h-8 relative">
         <div className="w-8 h-8 left-[48px] top-0 absolute">
           <Avatar>
