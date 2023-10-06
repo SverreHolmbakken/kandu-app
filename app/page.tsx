@@ -13,6 +13,8 @@ export default function Home() {
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const [boards, setBoards] = useState<Board[]>([]);
 
+	console.log(userId);
+
 	useEffect(() => {
 		const loadTasks = async () => {
 			const token = await getToken({ template: "supabase" });
