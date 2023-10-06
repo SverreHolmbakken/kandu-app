@@ -1,6 +1,12 @@
 import { UserButton } from "@clerk/nextjs";
 import { Avatar, AvatarFallback } from "../components/ui/avatar";
 import { Plus } from "lucide-react";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "../components/ui/tooltip";
 
 export default function Project() {
   return (
@@ -25,9 +31,18 @@ export default function Project() {
           </Avatar>
         </div>
         <div className="w-8 h-8 left-0 top-0 absolute">
-          <div className="w-8 h-8 bg-slate-200 rounded-full flex justify-center items-center">
-            <Plus className="w-4 h-4" />
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div className="w-8 h-8 bg-slate-200 rounded-full flex justify-center items-center">
+                  <Plus className="w-4 h-4" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Invite collaborators</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     </div>
