@@ -1,5 +1,5 @@
 import React from "react";
-import { MoreHorizontal, PlusSquare } from "lucide-react";
+import { PlusSquare } from "lucide-react";
 import EditColumn from "./kanban-column-edit";
 
 import {
@@ -17,7 +17,7 @@ export default function KanbanColumn() {
     <div className="rounded-md border w-1/4">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-50">
+          <TableRow className="bg-white">
             <TableHead>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -33,7 +33,7 @@ export default function KanbanColumn() {
             </TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="bg-slate-200">
           <TableRow>
             <TableCell>
               <Task />
