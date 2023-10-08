@@ -26,7 +26,7 @@ export default function KanbanColumn() {
                 <div className="ml-auto">
                   <PlusSquare />
                 </div>
-                <div className="ml-2">
+                <div className="ml-2 flex items-center">
                   <EditColumn />
                 </div>
               </div>
