@@ -9,7 +9,7 @@ function Header() {
 	const { isSignedIn } = useAuth();
 
 	return (
-		<div className="flex flex-row w-full justify-between items-center py-2 px-36 bg-transparent">
+		<div className="flex flex-row w-full justify-between items-center py-2 lg:px-36 md:px-8 px-1 bg-transparent">
 			<Link href="/" className="flex flex-row items-center gap-6">
 				<img src="/kandu-logo.svg" alt="" />
 				<h1 className="text-primaryDark font-bold text-3xl">Kandu</h1>
