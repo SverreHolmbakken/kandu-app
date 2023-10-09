@@ -20,6 +20,13 @@ export default function Dashboard() {
 			color: "#CDFAD5",
 		},
 	];
+
+	function shuffleColors() {
+		colors.sort(() => 0.5 - Math.random());
+	}
+
+	shuffleColors();
+
 	return (
 		<div className="flex h-screen flex-col justify-between px-36 m-auto">
 			<main className="flex h-full flex-col text-primaryDark">
