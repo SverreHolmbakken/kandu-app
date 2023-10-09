@@ -1,4 +1,6 @@
-import CreateProjectButton from "../components/ui/create-project-button";
+import { getAllTasks } from "@/tasks";
+import CreateProjectCard from "../components/ui/create-project-card";
+import ProjectCard from "../components/ui/project-card";
 
 export default function Dashboard() {
 
