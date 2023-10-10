@@ -15,7 +15,7 @@ import TaskModal from "./task-modal";
 
 export default function KanbanColumn() {
 	return (
-		<div className="rounded-md border w-1/4">
+		<div className="rounded-md border w-1/4 h-full">
 			<Table>
 				<TableHeader>
 					<TableRow className="bg-white">
@@ -34,7 +34,7 @@ export default function KanbanColumn() {
 						</TableHead>
 					</TableRow>
 				</TableHeader>
-				<TableBody className="bg-slate-200">
+				<TableBody>
 					<TableRow>
 						<TableCell>
 							<Task />
