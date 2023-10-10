@@ -9,7 +9,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "../ui/table";
+} from "../../ui/table";
 import Task from "./task";
 import TaskModal from "./task-modal";
 
