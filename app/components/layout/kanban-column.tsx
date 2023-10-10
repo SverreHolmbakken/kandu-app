@@ -5,6 +5,7 @@ import EditColumn from "./kanban-column-edit";
 
 import {
 	Table,
+	Table80,
 	TableBody,
 	TableCell,
 	TableHead,
@@ -41,8 +42,9 @@ export default function KanbanColumn() {
 	console.log(tasks);
 
 	return (
-		<div className="rounded-md border w-1/4">
-			<Table>
+		<div className="rounded-md border w-1/5 h-full edit-this-div">
+			{/* Invisible div here */}
+			<Table80 className="h-full">
 				<TableHeader>
 					<TableRow className="bg-white">
 						<TableHead>
@@ -50,7 +52,7 @@ export default function KanbanColumn() {
 								<div className="flex items-center">
 									<div className="mr-2">Column name</div>
 								</div>
-								<div className="ml-auto">
+								<div className="ml-auto flex items-center">
 									<TaskModal />
 								</div>
 								<div className="ml-2 flex items-center">
@@ -62,14 +64,14 @@ export default function KanbanColumn() {
 				</TableHeader>
 				<TableBody className="bg-slate-200">
 					<TableRow>
-						<TableCell className="flex flex-col gap-2">
+						<TableCell className="flex flex-col gap-2 h-full">
 							{tasks.map((task) => (
 								<Task key={task.id} task={task} />
 							))}
 						</TableCell>
 					</TableRow>
 				</TableBody>
-			</Table>
+			</Table80>
 		</div>
 	);
 }
