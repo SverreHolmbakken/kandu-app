@@ -1,34 +1,11 @@
+"use client";
+
 import { getAllTasks } from "@/tasks";
 import CreateProjectCard from "../components/ui/create-project-card";
 import ProjectCard from "../components/ui/project-card";
 
 export default function Dashboard() {
 	const tasks = getAllTasks();
-
-	const colors = [
-		{
-			id: 1,
-			color: "#FF8080",
-		},
-		{
-			id: 2,
-			color: "#FFCF96",
-		},
-		{
-			id: 3,
-			color: "#F6FDC3",
-		},
-		{
-			id: 4,
-			color: "#CDFAD5",
-		},
-	];
-
-	function shuffleColors() {
-		colors.sort(() => 0.5 - Math.random());
-	}
-
-	shuffleColors();
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
