@@ -1,5 +1,4 @@
 import React from "react";
-import { PlusSquare } from "lucide-react";
 import EditColumn from "./kanban-column-edit";
 
 import {
