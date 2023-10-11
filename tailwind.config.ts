@@ -53,6 +53,9 @@ module.exports = {
 				largeFont: "1.25rem",
 				extraLargeFont: "1.563rem",
 			},
+			height: {
+				"4/5vh": "80vh",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

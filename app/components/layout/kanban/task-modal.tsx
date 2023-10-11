@@ -34,36 +34,59 @@ import {
 } from "@/app/components/ui/form";
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
+import { postTask } from "@/app/utils/supabase-request";
 
 const formSchema = z.object({
-	taskname: z.string().min(1).max(30),
-	taskdescription: z.string().min(1).max(200),
+	taskName: z.string().min(1).max(30),
+	taskDescription: z.string().min(1).max(200),
 });
 
-export default function TaskModal() {
+export default function CreateTaskModal() {
 	const { toast } = useToast();
-	const userId = useAuth();
+	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			taskname: "",
-			taskdescription: "",
+			taskName: "",
+			taskDescription: "",
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
 		console.log(userId);
+		newTask();
 
 		try {
 			form.reset({
-				taskname: "",
-				taskdescription: "",
+				taskName: "",
+				taskDescription: "",
 			});
 		} catch (error) {
 			console.error(error);
 		}
 	}
+
+	interface Task {
+		title: string;
+		description: string;
+		column_id: number;
+	}
+
+	const newTask = async () => {
+		const { taskName, taskDescription } = form.getValues();
+		const task: Task = {
+			title: taskName,
+			description: taskDescription,
+			column_id: 1,
+		};
+		const token = await getToken({ template: "supabase" });
+		const postNewTask = await postTask({
+			userId: userId ?? "",
+			token: token ?? "",
+			task: task,
+		});
+	};
 
 	return (
 		<Dialog>
@@ -84,7 +107,7 @@ export default function TaskModal() {
 						>
 							<FormField
 								control={form.control}
-								name="taskname"
+								name="taskName"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Task name</FormLabel>
@@ -97,7 +120,7 @@ export default function TaskModal() {
 							/>
 							<FormField
 								control={form.control}
-								name="taskdescription"
+								name="taskDescription"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Task description</FormLabel>

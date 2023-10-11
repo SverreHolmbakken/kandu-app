@@ -15,6 +15,30 @@ export const getTasks = async ({
 	return tasks;
 };
 
+export const postTask = async ({
+	userId,
+	token,
+	task,
+}: {
+	userId: string;
+	token: string;
+	task: {
+		title: string;
+		description: string;
+		column_id: number;
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: newTask, error } = await supabase
+		.from("tasks")
+		.insert([{ ...task, user_id: userId }]);
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return newTask;
+};
+
 export const getBoards = async ({
 	userId,
 	token,
