@@ -33,7 +33,7 @@ export default function KanbanColumn() {
 	console.log(tasks);
 
 	return (
-		<div className="rounded-md border w-1/4 h-full overflow-hidden">
+		<div className="rounded-md border w-1/4 h-full overflow-hidden min-w-fit">
 			<header className="bg-slate-50 sticky top-0 z-10">
 				<div className="h-12 px-4 text-left align-middle border-b font-medium text-slate-600 dark:text-slate-400 flex items-center justify-between">
 					<div className="mr-2">Column name</div>
@@ -46,9 +46,9 @@ export default function KanbanColumn() {
 				</div>
 			</header>
 			<div className="h-full transition-colors hover:bg-slate-100/50 dark:hover:bg-slate-800/50 overflow-y-auto">
-				<div className="p-4 pt-0 align-middle">
+				<div className="flex flex-col gap-4 p-4 align-middle">
 					{tasks.map((task) => (
-						<Task key={task.id} task={tasks} />
+						<Task key={task.id} task={task} />
 					))}
 				</div>
 			</div>
