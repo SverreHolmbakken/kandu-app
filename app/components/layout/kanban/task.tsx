@@ -11,7 +11,7 @@ import {
 
 export default function Task() {
 	return (
-		<Card className="w-full">
+		<Card className="w-full my-4">
 			<CardHeader>
 				<CardTitle className="">
 					<div className="flex items-center justify-between text-base">
