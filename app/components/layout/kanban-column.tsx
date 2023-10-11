@@ -13,7 +13,7 @@ import {
 	TableRow,
 } from "../ui/table";
 import Task from "./task";
-import TaskModal from "./task-modal";
+import CreateTaskModal from "./task-modal";
 
 import { useAuth } from "@clerk/nextjs";
 import { getTasks } from "@/app/utils/supabase-request";
@@ -42,7 +42,7 @@ export default function KanbanColumn() {
 	console.log(tasks);
 
 	return (
-		<div className="rounded-md border w-1/5 h-full edit-this-div">
+		<div className="rounded-md border w-1/5 h-full edit-this-div min-w-fit">
 			{/* Invisible div here */}
 			<Table80 className="h-full">
 				<TableHeader>
@@ -53,7 +53,7 @@ export default function KanbanColumn() {
 									<div className="mr-2">Column name</div>
 								</div>
 								<div className="ml-auto flex items-center">
-									<TaskModal />
+									<CreateTaskModal />
 								</div>
 								<div className="ml-2 flex items-center">
 									<EditColumn />

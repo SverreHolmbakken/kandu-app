@@ -41,7 +41,7 @@ const formSchema = z.object({
 	taskDescription: z.string().min(1).max(200),
 });
 
-export default function TaskModal() {
+export default function CreateTaskModal() {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
