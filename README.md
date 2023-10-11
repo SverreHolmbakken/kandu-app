@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/SverreHolmbakken/kandu-app/assets/110482909/f070dbb9-08fa-4833-bf48-fea6a7c632fc">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/SverreHolmbakken/kandu-app/assets/110482909/a72518d6-aa30-437d-86c6-3b71e0bece23">
+  <img alt="Kandu logo" src="https://github.com/SverreHolmbakken/kandu-app/assets/110482909/a72518d6-aa30-437d-86c6-3b71e0bece23">
+</picture>
 
 ## Getting Started
 
