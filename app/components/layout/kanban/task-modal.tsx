@@ -37,7 +37,7 @@ import { useAuth } from "@clerk/nextjs";
 import { postTask } from "@/app/utils/supabase-request";
 
 const formSchema = z.object({
-	taskName: z.string().min(1).max(30),
+	taskTitle: z.string().min(1).max(30),
 	taskDescription: z.string().min(1).max(200),
 });
 
@@ -47,7 +47,7 @@ export default function CreateTaskModal() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			taskName: "",
+			taskTitle: "",
 			taskDescription: "",
 		},
 	});
@@ -59,7 +59,7 @@ export default function CreateTaskModal() {
 
 		try {
 			form.reset({
-				taskName: "",
+				taskTitle: "",
 				taskDescription: "",
 			});
 		} catch (error) {
@@ -74,9 +74,9 @@ export default function CreateTaskModal() {
 	}
 
 	const newTask = async () => {
-		const { taskName, taskDescription } = form.getValues();
+		const { taskTitle, taskDescription } = form.getValues();
 		const task: Task = {
-			title: taskName,
+			title: taskTitle,
 			description: taskDescription,
 			column_id: 1,
 		};
@@ -107,7 +107,7 @@ export default function CreateTaskModal() {
 						>
 							<FormField
 								control={form.control}
-								name="taskName"
+								name="taskTitle"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Task name</FormLabel>
