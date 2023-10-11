@@ -10,17 +10,17 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
+					"bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90",
 				destructive:
-					"bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
+					"bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/90",
 				outline:
-					"border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+					"border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
 				secondary:
-					"bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
-				ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
-				link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
+					"bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80",
+				ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
+				link: "text-slate-900 underline-offset-4 hover:underline dark:text-zinc-50",
 				gradient:
-					"bg-slate-900 text-slate-50 hover:bg-gradient-to-b from-blue-600 to-fuchsia-600/90 dark:bg-gradient-to-b from-blue-600 to-fuchsia-600 dark:text-slate-50 dark:hover:bg-gradient-to-b from-blue-600 to-fuchsia-600/90",
+					"bg-slate-900 text-slate-50 hover:bg-gradient-to-b from-blue-600 to-fuchsia-600/90 from-blue-600 to-fuchsia-600 dark:text-zinc-50 dark:hover:bg-gradient-to-b from-blue-600 to-fuchsia-600/90",
 			},
 			size: {
 				default: "h-10 px-4 py-2",

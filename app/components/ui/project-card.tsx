@@ -10,9 +10,7 @@ export default function ProjectCard(props: any) {
 				<h2 className="text-mediumFont font-semibold text-primaryDark">
 					{title}
 				</h2>
-				<p className="text-smallFont text-secondaryDark">
-					{description}
-				</p>
+				<p className="text-smallFont text-secondaryDark">{description}</p>
 				<span className="flex flex-row gap-2 text-smallFont h-4 mt-1">
 					<CalendarDays className="h-full w-4 text-secondaryDark" />
 					<p className="text-center text-secondaryDark">{date}</p>
