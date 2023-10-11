@@ -39,35 +39,61 @@ export const postTask = async ({
 	return newTask;
 };
 
-export const getBoards = async ({
-	userId,
+export const postProject = async ({
 	token,
+	project,
+	userId,
 }: {
-	userId: string;
+	userId?: string[];
 	token: string;
+	project: {
+		name: string;
+		accessed_by: string[];
+	};
 }) => {
 	const supabase = await supabaseClient(token);
-	const { data: boards } = await supabase
-		.from("boards")
-		.select("*")
-		.eq("accessed_by", userId);
-	return boards;
+	const { data: newProject, error } = await supabase.from("projects").insert([
+		{
+			...project,
+			accessed_by: [...project.accessed_by, ...(userId ?? [])],
+		},
+	]);
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return newProject;
 };
 
-export const getColumns = async ({
+export const getProjects = async ({
 	userId,
 	token,
-	boardId,
 }: {
 	userId: string;
 	token: string;
-	boardId: number;
 }) => {
 	const supabase = await supabaseClient(token);
-	const { data: columns } = await supabase
-		.from("columns")
-		.select("*")
-		.eq("board_id", boardId)
-		.eq("user_id", userId);
-	return columns;
+	const { data: projects } = await supabase
+		.from("projects")
+		.select()
+		.contains("accessed_by", [userId, userId ?? ""]);
+	return projects;
 };
+
+// export const getColumns = async ({
+// 	userId,
+// 	token,
+// 	boardId,
+// }: {
+// 	userId: string;
+// 	token: string;
+// 	boardId: number;
+// }) => {
+// 	const supabase = await supabaseClient(token);
+// 	const { data: columns } = await supabase
+// 		.from("columns")
+// 		.select("*")
+// 		.eq("board_id", boardId)
+// 		.eq("user_id", userId);
+// 	return columns;
+// };
