@@ -48,7 +48,7 @@ export default function KanbanColumn() {
 			<div className="h-full transition-colors hover:bg-slate-100/50 dark:hover:bg-slate-800/50 overflow-y-auto">
 				<div className="p-4 pt-0 align-middle">
 					{tasks.map((task) => (
-						<Task key={task.id} task={task} />
+						<Task key={task.id} task={tasks} />
 					))}
 				</div>
 			</div>
