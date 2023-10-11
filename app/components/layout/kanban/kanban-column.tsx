@@ -1,14 +1,4 @@
-import React from "react";
 import EditColumn from "./kanban-column-edit";
-
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "../../ui/table";
 import Task from "./task";
 import TaskModal from "./task-modal";
 
