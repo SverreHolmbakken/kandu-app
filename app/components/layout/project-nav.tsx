@@ -11,7 +11,7 @@ import {
 export default function ProjectNav() {
 	return (
 		<div className="w-screen h-[52px] px-5 py-2.5 justify-between items-center inline-flex">
-			<div className="text-black text-2xl font-medium leading-none dark:text-zinc-300">
+			<div className="text-black text-2xl font-medium leading-none dark:text-zinc-200">
 				Project title
 			</div>
 			{/* TODO: API to fetch user avatar */}
@@ -35,7 +35,7 @@ export default function ProjectNav() {
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>
-								<div className="w-8 h-8 bg-slate-200 rounded-full flex justify-center items-center">
+								<div className="w-8 h-8 bg-slate-200 dark:bg-zinc-700 rounded-full flex justify-center items-center">
 									<Plus className="w-4 h-4" />
 								</div>
 							</TooltipTrigger>

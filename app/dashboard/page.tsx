@@ -9,7 +9,7 @@ export default function Dashboard() {
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
-			<main className="flex h-full flex-col text-primaryDark">
+			<main className="flex h-full flex-col text-primaryDark dark:text-zinc-200">
 				<h1 className="w-full text-extraLargeFont py-largePadding">
 					Projects
 				</h1>

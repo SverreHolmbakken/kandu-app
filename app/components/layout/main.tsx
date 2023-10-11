@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Main() {
 	return (
-		<div className="bg-slate-200 h-full w-full p-10 flex justify-between">
+		<div className="bg-slate-200 h-full w-full p-10 flex justify-between dark:bg-neutral-900">
 			<Link href="/project">Project</Link>
 
 			<Button> default </Button>
