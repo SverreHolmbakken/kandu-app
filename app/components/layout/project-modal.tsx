@@ -34,6 +34,7 @@ import {
 } from "@/app/components/ui/form";
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
+import { postProject } from "@/app/utils/supabase-request";
 
 const formSchema = z.object({
 	projectName: z.string().min(1).max(30),
@@ -42,7 +43,7 @@ const formSchema = z.object({
 
 export default function ProjectModal() {
 	const { toast } = useToast();
-	const userId = useAuth();
+	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -54,6 +55,7 @@ export default function ProjectModal() {
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
 		console.log(userId);
+		newProject();
 
 		try {
 			form.reset({
@@ -64,6 +66,41 @@ export default function ProjectModal() {
 			console.error(error);
 		}
 	}
+
+	function RandomHexColor() {
+		const hexChars = "0123456789ABCDEF";
+		let color = "#";
+		for (let i = 0; i < 6; i++) {
+			color += hexChars[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+	console.log(RandomHexColor());
+
+	interface Project {
+		name: string;
+		description?: string;
+		accessed_by: string[];
+		owner_id: string;
+		card_color: string;
+	}
+
+	const newProject = async () => {
+		const { projectName, projectDescription } = form.getValues();
+		const project: Project = {
+			name: projectName,
+			description: projectDescription,
+			accessed_by: [userId ?? ""],
+			owner_id: userId ?? "",
+			card_color: RandomHexColor(),
+		};
+		const token = await getToken({ template: "supabase" });
+		const postNewProject = await postProject({
+			token: token ?? "",
+			project: project,
+		});
+	};
 
 	return (
 		<DialogContent>
