@@ -11,7 +11,7 @@ export default function Home() {
 	console.log(userId);
 
 	return (
-		<div className="flex item center h-screen w-screen flex-col">
+		<div className="flex item center h-screen w-full flex-col">
 			<div className=" bg-purple-100 dark:bg-purple-400/50 absolute top-[-6rem] -z-10 right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem]"></div>
 			<div className=" bg-blue-200 dark:bg-blue-400/20 absolute top-[-1rem] -z-10 left-[11rem] h-[31.25rem] w-[50rem] rounded-full blur-[10rem] sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:left-[-15rem] 2xl:left-[-5rem]"></div>
 			<main>
@@ -39,7 +39,7 @@ export default function Home() {
 							}}
 						>
 							{" "}
-							is an app devoloped by newgrads in need of a job.
+							is an app developed by newgrads in need of a job.
 						</motion.span>
 					</div>
 					<motion.div
