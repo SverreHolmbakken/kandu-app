@@ -147,3 +147,20 @@ export const getProjectBySlug = async ({
 	}
 	return project;
 };
+
+export const getTasksByColumnId = async ({
+	userId,
+	token,
+	columnId,
+}: {
+	userId: string;
+	token: string;
+	columnId: number;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: tasks } = await supabase
+		.from("tasks")
+		.select("*")
+		.eq("column_id", columnId);
+	return tasks;
+};
