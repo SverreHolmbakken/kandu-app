@@ -9,7 +9,8 @@ import CreateTaskModal from "./task-modal";
 import { useAuth } from "@clerk/nextjs";
 import { getTasks } from "@/app/utils/supabase-request";
 
-export default function KanbanColumn() {
+export default function KanbanColumn(props: any) {
+	const { name } = props;
 	const { userId, getToken } = useAuth();
 	const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -36,7 +37,7 @@ export default function KanbanColumn() {
 		<div className="rounded-md border w-1/4 h-full overflow-hidden min-w-fit dark:border-zinc-600">
 			<header className="bg-slate-50 sticky top-0 z-10">
 				<div className="h-12 px-4 text-left align-middle border-b font-medium text-slate-700 dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-600 flex items-center justify-between">
-					<div className="mr-2">Column name</div>
+					<div className="mr-2">{name}</div>
 					<div className="ml-auto flex items-center">
 						<CreateTaskModal />
 					</div>

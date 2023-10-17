@@ -1,12 +1,19 @@
 import { CalendarDays } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function ProjectCard(props: any) {
-	const { name, description, date, color } = props;
+	const { name, description, date, color, slug } = props;
 
-	const elementStyle = "flex w-full h-3/4 bg-[" + color + "]";
+	const [cardColor, setCardColor] = useState<string>("");
+
+	const elementStyle = "flex w-full h-3/4 bg-[" + cardColor + "]";
 
 	return (
-		<button className="flex flex-col h-80 rounded-md border-solid border-[1px] border-secondaryLight hover:opacity-90">
+		<Link
+			className="flex flex-col h-80 rounded-md border-solid border-[1px] border-secondaryLight hover:opacity-90"
+			href={"/project/" + slug}
+		>
 			<div className={elementStyle} />
 			<div className="flex flex-col w-full text-start p-1">
 				<h2 className="text-mediumFont font-semibold text-primaryDark dark:text-zinc-200">
@@ -22,6 +29,6 @@ export default function ProjectCard(props: any) {
 					</p>
 				</span>
 			</div>
-		</button>
+		</Link>
 	);
 }
