@@ -46,7 +46,7 @@ const Page: FC<Props> = ({ params }) => {
 		};
 		loadColumns();
 	}, []);
-	console.log(columns);
+	console.log(columns, "columns");
 
 	useEffect(() => {
 		const loadProject = async () => {
@@ -71,6 +71,7 @@ const Page: FC<Props> = ({ params }) => {
 						key={column.id}
 						column={columns}
 						name={column.column_name}
+						columnId={column.id}
 					/>
 				))}
 				<NewColumn />

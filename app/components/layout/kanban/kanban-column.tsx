@@ -10,7 +10,7 @@ import { useAuth } from "@clerk/nextjs";
 import { getTasksByColumnId } from "@/app/utils/supabase-request";
 
 export default function KanbanColumn(props: any) {
-	const { name, column } = props;
+	const { name, column, columnId } = props;
 	const { userId, getToken } = useAuth();
 	const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -26,17 +26,16 @@ export default function KanbanColumn(props: any) {
 			const tasks = await getTasksByColumnId({
 				userId: userId ?? "",
 				token: token ?? "",
-				columnId: column[0].id,
+				columnId: columnId,
 				// Still need to figure out how to get the column id
 			});
 			setTasks(tasks || []);
 		};
-		column.map((column: any) => {
-			console.log(column.id);
-		});
 		loadTasks();
 	}, []);
-	console.log(column);
+	console.log(column, "column");
+	console.log(columnId, "columnId");
+	console.log(tasks, "tasks");
 
 	return (
 		<div className="rounded-md border w-1/4 h-full overflow-hidden min-w-fit dark:border-zinc-600">
