@@ -7,7 +7,6 @@ import {
 } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
-import KanbanLayout from "@/app/components/layout/kanban/kanban-layout";
 import ProjectNav from "@/app/components/layout/project-nav";
 import NewColumn from "@/app/components/layout/kanban/kanban-cloumn-new";
 
