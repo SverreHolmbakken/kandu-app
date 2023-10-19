@@ -39,9 +39,10 @@ import { postTask } from "@/app/utils/supabase-request";
 const formSchema = z.object({
 	taskTitle: z.string().min(1).max(30),
 	taskDescription: z.string().min(1).max(200),
+	taskColumn: z.number(),
 });
 
-export default function CreateTaskModal() {
+export default function CreateTaskModal({ columnId }: { columnId: number }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -49,6 +50,7 @@ export default function CreateTaskModal() {
 		defaultValues: {
 			taskTitle: "",
 			taskDescription: "",
+			taskColumn: columnId,
 		},
 	});
 
@@ -78,7 +80,7 @@ export default function CreateTaskModal() {
 		const task: Task = {
 			title: taskTitle,
 			description: taskDescription,
-			column_id: 1,
+			column_id: columnId,
 		};
 		const token = await getToken({ template: "supabase" });
 		const postNewTask = await postTask({

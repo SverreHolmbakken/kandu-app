@@ -9,8 +9,6 @@ import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import KanbanLayout from "@/app/components/layout/kanban/kanban-layout";
 import ProjectNav from "@/app/components/layout/project-nav";
-import { useFormField } from "@/app/components/ui/form";
-import { get } from "http";
 import NewColumn from "@/app/components/layout/kanban/kanban-cloumn-new";
 
 interface Props {
@@ -69,7 +67,6 @@ const Page: FC<Props> = ({ params }) => {
 				{columns.map((column) => (
 					<KanbanColumn
 						key={column.id}
-						column={columns}
 						name={column.column_name}
 						columnId={column.id}
 					/>

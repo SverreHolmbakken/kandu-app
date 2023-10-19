@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import EditColumn from "./kanban-column-edit";
 
 import Task from "./task";
@@ -9,8 +9,12 @@ import CreateTaskModal from "./task-modal";
 import { useAuth } from "@clerk/nextjs";
 import { getTasksByColumnId } from "@/app/utils/supabase-request";
 
-export default function KanbanColumn(props: any) {
-	const { name, column, columnId } = props;
+interface KanbanColumnProps {
+	name: string;
+	columnId: number;
+}
+
+const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 	const { userId, getToken } = useAuth();
 	const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -18,6 +22,7 @@ export default function KanbanColumn(props: any) {
 		id: number;
 		title: string;
 		description: string;
+		column_id: number;
 	}
 
 	useEffect(() => {
@@ -27,14 +32,11 @@ export default function KanbanColumn(props: any) {
 				userId: userId ?? "",
 				token: token ?? "",
 				columnId: columnId,
-				// Still need to figure out how to get the column id
 			});
 			setTasks(tasks || []);
 		};
 		loadTasks();
-	}, []);
-	console.log(column, "column");
-	console.log(columnId, "columnId");
+	}, [columnId, getToken, userId]);
 	console.log(tasks, "tasks");
 
 	return (
@@ -43,7 +45,7 @@ export default function KanbanColumn(props: any) {
 				<div className="h-12 px-4 text-left align-middle border-b font-medium text-slate-700 dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-600 flex items-center justify-between">
 					<div className="mr-2">{name}</div>
 					<div className="ml-auto flex items-center">
-						<CreateTaskModal />
+						<CreateTaskModal columnId={columnId} />
 					</div>
 					<div className="ml-2 flex items-center">
 						<EditColumn />
@@ -59,4 +61,6 @@ export default function KanbanColumn(props: any) {
 			</div>
 		</div>
 	);
-}
+};
+
+export default KanbanColumn;
