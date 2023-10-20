@@ -80,20 +80,87 @@ export const getProjects = async ({
 	return projects;
 };
 
-// export const getColumns = async ({
-// 	userId,
-// 	token,
-// 	boardId,
-// }: {
-// 	userId: string;
-// 	token: string;
-// 	boardId: number;
-// }) => {
-// 	const supabase = await supabaseClient(token);
-// 	const { data: columns } = await supabase
-// 		.from("columns")
-// 		.select("*")
-// 		.eq("board_id", boardId)
-// 		.eq("user_id", userId);
-// 	return columns;
-// };
+export const getColumns = async ({
+	userId,
+	token,
+	projectId,
+}: {
+	userId: string;
+	token: string;
+	projectId: number;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: columns } = await supabase
+		.from("columns")
+		.select("*")
+		.eq("project_id", projectId)
+		.eq("user_id", userId);
+	return columns;
+};
+
+export const getColumnsBySlug = async ({
+	userId,
+	token,
+	slug,
+}: {
+	userId: string;
+	token: string;
+	slug: string;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: project, error } = await supabase
+		.from("projects")
+		.select("id")
+		.eq("slug", slug)
+		.single();
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	const { data: columns } = await supabase
+		.from("columns")
+		.select("*")
+		.eq("project_id", project.id)
+		// .eq("accessed_by", userId)
+		.contains("accessed_by", [userId, userId ?? ""]);
+	return columns;
+};
+
+export const getProjectBySlug = async ({
+	userId,
+	token,
+	slug,
+}: {
+	userId: string;
+	token: string;
+	slug: string;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: project, error } = await supabase
+		.from("projects")
+		.select("*")
+		.eq("slug", slug)
+		.single();
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return project;
+};
+
+export const getTasksByColumnId = async ({
+	userId,
+	token,
+	columnId,
+}: {
+	userId: string;
+	token: string;
+	columnId: number;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: tasks } = await supabase
+		.from("tasks")
+		.select("*")
+		.eq("column_id", columnId);
+	return tasks;
+};

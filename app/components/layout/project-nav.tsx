@@ -8,11 +8,12 @@ import {
 	TooltipContent,
 } from "../ui/tooltip";
 
-export default function ProjectNav() {
+export default function ProjectNav(props: any) {
+	const { title } = props;
 	return (
 		<div className="w-screen h-[52px] px-5 py-2.5 justify-between items-center inline-flex">
 			<div className="text-black text-2xl font-medium leading-none dark:text-zinc-200">
-				Project title
+				{title}
 			</div>
 			{/* TODO: API to fetch user avatar */}
 			<div className="w-20 h-8 relative">
