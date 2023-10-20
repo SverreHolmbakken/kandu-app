@@ -12,6 +12,7 @@ export default function Dashboard() {
 	const tasks = getAllTasks();
 
 	const [projects, setProjects] = useState<Project[]>([]);
+	const [cardColor, setCardColor] = useState<string>("");
 
 	interface Project {
 		id: number;
@@ -21,6 +22,7 @@ export default function Dashboard() {
 		owner_id: string;
 		created_at: string;
 		card_color: string;
+		slug: string;
 	}
 
 	useEffect(() => {
@@ -33,10 +35,12 @@ export default function Dashboard() {
 			console.log(projects);
 			if (projects !== null) {
 				setProjects(projects);
+				setCardColor(projects[0].card_color);
 			}
 		};
 		loadProject();
 	}, []);
+	console.log(cardColor);
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
@@ -51,7 +55,8 @@ export default function Dashboard() {
 							name={project.name}
 							description={project.description}
 							date={new Date(project.created_at).toLocaleDateString()}
-							color={project.card_color}
+							color={cardColor}
+							slug={project.slug}
 						/>
 					))}
 					<CreateProjectCard />
