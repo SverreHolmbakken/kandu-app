@@ -36,7 +36,7 @@ function Header() {
 						</ClerkLoading>
 
 						<ClerkLoaded>
-							<UserButton />
+							<UserButton afterSignOutUrl="/" />
 						</ClerkLoaded>
 					</div>
 				)}
