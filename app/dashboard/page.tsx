@@ -46,16 +46,26 @@ export default function Dashboard() {
 					Projects
 				</h1>
 				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-					{projects.map((project) => (
-						<ProjectCard
-							key={project.id}
-							name={project.name}
-							description={project.description}
-							date={new Date(project.created_at).toLocaleDateString()}
-							color={project.card_color}
-							slug={project.slug}
-						/>
-					))}
+					{projects
+						.map((project) => (
+							<ProjectCard
+								key={project.id}
+								name={project.name}
+								description={project.description}
+								date={new Date(project.created_at).toLocaleDateString()}
+								color={project.card_color}
+								slug={project.slug}
+							/>
+						))
+						.sort((a, b) => {
+							if (a.props.date > b.props.date) {
+								return 1;
+							}
+							if (a.props.date < b.props.date) {
+								return -1;
+							}
+							return 0;
+						})}
 					<CreateProjectCard />
 				</div>
 			</main>
