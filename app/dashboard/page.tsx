@@ -10,6 +10,7 @@ export default function Dashboard() {
 	const { userId, getToken } = useAuth();
 
 	const [projects, setProjects] = useState<Project[]>([]);
+	const [cardColor, setCardColor] = useState<string>("");
 
 	interface Project {
 		id: number;
@@ -32,10 +33,12 @@ export default function Dashboard() {
 			console.log(projects);
 			if (projects !== null) {
 				setProjects(projects);
+				setCardColor(projects[0].card_color);
 			}
 		};
 		loadProject();
 	}, []);
+	console.log(cardColor);
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
