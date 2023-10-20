@@ -1,15 +1,13 @@
 "use client";
 
-import { getAllTasks } from "@/tasks";
 import { useEffect, useState } from "react";
-import CreateProjectCard from "../components/ui/create-project-card";
-import ProjectCard from "../components/ui/project-card";
 import { useAuth } from "@clerk/nextjs";
 import { getProjects } from "../utils/supabase-request";
+import CreateProjectCard from "../components/ui/create-project-card";
+import ProjectCard from "../components/ui/project-card";
 
 export default function Dashboard() {
 	const { userId, getToken } = useAuth();
-	const tasks = getAllTasks();
 
 	const [projects, setProjects] = useState<Project[]>([]);
 
