@@ -12,7 +12,6 @@ export default function Dashboard() {
 	const tasks = getAllTasks();
 
 	const [projects, setProjects] = useState<Project[]>([]);
-	const [cardColor, setCardColor] = useState<string>("");
 
 	interface Project {
 		id: number;
@@ -35,12 +34,10 @@ export default function Dashboard() {
 			console.log(projects);
 			if (projects !== null) {
 				setProjects(projects);
-				setCardColor(projects[0].card_color);
 			}
 		};
 		loadProject();
 	}, []);
-	console.log(cardColor);
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
@@ -48,14 +45,14 @@ export default function Dashboard() {
 				<h1 className="w-full text-extraLargeFont py-largePadding">
 					Projects
 				</h1>
-				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{projects.map((project) => (
 						<ProjectCard
 							key={project.id}
 							name={project.name}
 							description={project.description}
 							date={new Date(project.created_at).toLocaleDateString()}
-							color={cardColor}
+							color={project.card_color}
 							slug={project.slug}
 						/>
 					))}
