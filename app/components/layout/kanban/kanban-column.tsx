@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect, FC } from "react";
-import EditColumn from "./kanban-column-edit";
-
-import Task from "./task";
-import CreateTaskModal from "./task-modal";
-
 import { useAuth } from "@clerk/nextjs";
 import { getTasksByColumnId } from "@/app/utils/supabase-request";
+import CreateTaskModal from "./task-modal";
+import EditColumn from "./kanban-column-edit";
+import Task from "./task";
 
 interface KanbanColumnProps {
 	name: string;
@@ -36,8 +34,7 @@ const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 			setTasks(tasks || []);
 		};
 		loadTasks();
-	}, [columnId, getToken, userId]);
-	console.log(tasks, "tasks");
+	}, []);
 
 	return (
 		<div className="rounded-md border w-1/4 h-full overflow-hidden min-w-fit dark:border-zinc-600">

@@ -5,10 +5,6 @@ import Hero from "./components/landing-page/hero";
 import Demo from "./components/landing-page/demo";
 
 export default function Home() {
-	const { userId } = useAuth();
-
-	console.log(userId);
-
 	return (
 		<div className="flex flex-col w-full h-full absolute overflow-x-hidden">
 			<div className=" bg-purple-100 dark:bg-purple-400/50 absolute top-[-6rem] -z-10 right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem]"></div>

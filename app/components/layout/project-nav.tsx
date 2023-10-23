@@ -11,7 +11,7 @@ import {
 export default function ProjectNav(props: any) {
 	const { title } = props;
 	return (
-		<div className="w-screen h-[52px] px-5 py-2.5 justify-between items-center inline-flex">
+		<div className="w-full h-[52px] px-5 py-2.5 justify-between items-center inline-flex">
 			<div className="text-black text-2xl font-medium leading-none dark:text-zinc-200">
 				{title}
 			</div>
