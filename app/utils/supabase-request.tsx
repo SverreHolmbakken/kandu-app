@@ -65,6 +65,28 @@ export const postProject = async ({
 	return newProject;
 };
 
+export const postColumn = async ({
+	token,
+	column,
+}: {
+	token: string;
+	column: {
+		column_name: string;
+		project_id: number;
+		// accessed_by: string[];
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: newColumn, error } = await supabase
+		.from("columns")
+		.insert([column]);
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return newColumn;
+};
+
 export const getProjects = async ({
 	userId,
 	token,
@@ -120,9 +142,8 @@ export const getColumnsBySlug = async ({
 	const { data: columns } = await supabase
 		.from("columns")
 		.select("*")
-		.eq("project_id", project.id)
-		// .eq("accessed_by", userId)
-		.contains("accessed_by", [userId, userId ?? ""]);
+		.eq("project_id", project.id);
+	// .contains("accessed_by", [userId, userId ?? ""]);
 	return columns;
 };
 
@@ -163,4 +184,48 @@ export const getTasksByColumnId = async ({
 		.select("*")
 		.eq("column_id", columnId);
 	return tasks;
+};
+
+export const updateColumn = async ({
+	token,
+	column,
+}: {
+	token: string;
+	column: {
+		name: string;
+		id: number;
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: updateColumn, error } = await supabase
+		.from("columns")
+		.update({ column_name: column.name })
+		.eq("id", column.id)
+		.select();
+	console.log(updateColumn, "updatedColumn");
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return updateColumn;
+};
+
+export const deleteColumn = async ({
+	token,
+	columnId,
+}: {
+	token: string;
+	columnId: number;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data, error } = await supabase
+		.from("columns")
+		.delete()
+		.eq("id", columnId)
+		.select();
+	console.log(data, "deletedColumn");
+	if (error) {
+		console.log(error);
+		return false;
+	}
 };

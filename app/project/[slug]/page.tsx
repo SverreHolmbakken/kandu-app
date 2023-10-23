@@ -8,7 +8,7 @@ import {
 import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import ProjectNav from "@/app/components/layout/project-nav";
-import NewColumn from "@/app/components/layout/kanban/kanban-cloumn-new";
+import NewColumn from "@/app/components/layout/kanban/kanban-column-new";
 
 interface Props {
 	params: { slug: string };
@@ -29,6 +29,7 @@ const Page: FC<Props> = ({ params }) => {
 
 	interface Project {
 		name: string;
+		id: number;
 	}
 
 	useEffect(() => {
@@ -59,10 +60,13 @@ const Page: FC<Props> = ({ params }) => {
 		loadProject();
 	}, []);
 
+	console.log(project, "project");
+	const projectId = project?.id;
+
 	return (
-		<div>
+		<div className="">
 			<ProjectNav title={project?.name} />
-			<div className="h-[80vh] flex flex-row space-x-5 mx-5">
+			<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
 				{columns.map((column) => (
 					<KanbanColumn
 						key={column.id}
@@ -70,7 +74,7 @@ const Page: FC<Props> = ({ params }) => {
 						columnId={column.id}
 					/>
 				))}
-				<NewColumn />
+				<NewColumn projectId={projectId} />
 			</div>
 		</div>
 	);
