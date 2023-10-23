@@ -20,9 +20,14 @@ const Demo = () => {
 
 	return (
 		<section className="grid h-screen mt-28">
-			<span className="text-5xl font-bold justify-self-end text-right mr-20">
-				Organize and plan your project with your team
-			</span>
+			<div className="justify-self-end text-right mr-20">
+				<span className="text-4xl font-bold ">
+					Organize and plan your project with your team
+				</span>
+				<p className="text-l text-zinc-700">
+					Create tasks and drag them across your board as you progress.
+				</p>
+			</div>
 			<motion.div
 				className="justify-self-center flex flex-row p-5 space-x-5 w-[80vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-slate-700 dark:border-slate-700/50 dark:shadow-2xl"
 				animate={inView ? "visible" : "hidden"}
