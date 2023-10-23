@@ -29,7 +29,7 @@ const Demo = () => {
 				</p>
 			</div>
 			<motion.div
-				className="justify-self-center flex flex-row p-5 space-x-5 w-[80vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-slate-700 dark:border-slate-700/50 dark:shadow-2xl"
+				className="justify-self-center flex flex-row p-5 space-x-5 w-[85vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-slate-700 dark:border-slate-700/50 dark:shadow-2xl"
 				animate={inView ? "visible" : "hidden"}
 				variants={variants}
 				exit="hidden"
