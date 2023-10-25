@@ -75,7 +75,7 @@ function TaskCard({ task }: Props) {
 				setMouseIsOver(false);
 			}}
 		>
-			<p className="text-black my-auto h-[90%] w-full overflow-x-hidden">
+			<p className="text-black my-auto h-[90%] w-full overflow-x-hidden select-none">
 				{task.content}
 			</p>
 		</div>
