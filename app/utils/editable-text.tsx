@@ -23,8 +23,6 @@ export default function EditableText({ initialText, columnId }: any) {
 			token: token ?? "",
 			column: column,
 		});
-		console.log(response, "response");
-		console.log("Text:", text);
 	};
 
 	const handleDoubleClick = () => {
@@ -41,11 +39,6 @@ export default function EditableText({ initialText, columnId }: any) {
 		// This is where the input value gets sent to the database
 		updateColumnName(columnId);
 	};
-
-	useEffect(() => {
-		if (isEditing) {
-		}
-	}, [isEditing]);
 
 	return (
 		<div onDoubleClick={handleDoubleClick}>

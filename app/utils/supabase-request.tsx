@@ -1,19 +1,19 @@
 import { supabaseClient } from "./supabase-client";
 
-export const getTasks = async ({
-	userId,
-	token,
-}: {
-	userId: string;
-	token: string;
-}) => {
-	const supabase = await supabaseClient(token);
-	const { data: tasks } = await supabase
-		.from("tasks")
-		.select("*")
-		.eq("user_id", userId);
-	return tasks;
-};
+// export const getTasks = async ({
+// 	userId,
+// 	token,
+// }: {
+// 	userId: string;
+// 	token: string;
+// }) => {
+// 	const supabase = await supabaseClient(token);
+// 	const { data: tasks } = await supabase
+// 		.from("tasks")
+// 		.select("*")
+// 		.eq("user_id", userId);
+// 	return tasks;
+// };
 
 export const postTask = async ({
 	userId,
@@ -69,10 +69,12 @@ export const postColumn = async ({
 	token,
 	column,
 }: {
+	userId?: string;
 	token: string;
 	column: {
 		column_name: string;
 		project_id: number;
+		userId?: string;
 		// accessed_by: string[];
 	};
 }) => {
@@ -102,23 +104,23 @@ export const getProjects = async ({
 	return projects;
 };
 
-export const getColumns = async ({
-	userId,
-	token,
-	projectId,
-}: {
-	userId: string;
-	token: string;
-	projectId: number;
-}) => {
-	const supabase = await supabaseClient(token);
-	const { data: columns } = await supabase
-		.from("columns")
-		.select("*")
-		.eq("project_id", projectId)
-		.eq("user_id", userId);
-	return columns;
-};
+// export const getColumns = async ({
+// 	userId,
+// 	token,
+// 	projectId,
+// }: {
+// 	userId: string;
+// 	token: string;
+// 	projectId: number;
+// }) => {
+// 	const supabase = await supabaseClient(token);
+// 	const { data: columns } = await supabase
+// 		.from("columns")
+// 		.select("*")
+// 		.eq("project_id", projectId)
+// 		.eq("user_id", userId);
+// 	return columns;
+// };
 
 export const getColumnsBySlug = async ({
 	userId,
@@ -202,7 +204,6 @@ export const updateColumn = async ({
 		.update({ column_name: column.name })
 		.eq("id", column.id)
 		.select();
-	console.log(updateColumn, "updatedColumn");
 	if (error) {
 		console.log(error);
 		return false;
