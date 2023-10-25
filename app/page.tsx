@@ -1,15 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useAuth } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { ChevronDownSquare } from "lucide-react";
 
 export default function Home() {
-	const { userId } = useAuth();
-
-	console.log(userId);
-
 	return (
 		<div className="flex item center h-screen w-full flex-col">
 			<div className=" bg-purple-100 dark:bg-purple-400/50 absolute top-[-6rem] -z-10 right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem]"></div>
