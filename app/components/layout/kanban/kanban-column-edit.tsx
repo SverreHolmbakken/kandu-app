@@ -8,6 +8,18 @@ import {
 } from "../../ui/dropdown-menu";
 import { deleteColumn } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
+import EditColumnName from "../../ui/modals/edit-column-name";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+	AlertDialogFooter,
+	AlertDialogHeader,
+} from "../../ui/alert-dialog";
 
 export default function EditColumn({ columnId }: { columnId: number }) {
 	const { getToken } = useAuth();
@@ -23,14 +35,38 @@ export default function EditColumn({ columnId }: { columnId: number }) {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
-				<MoreHorizontal />
+			<DropdownMenuTrigger asChild>
+				<MoreHorizontal className="cursor-pointer" />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				<DropdownMenuItem>Edit column</DropdownMenuItem>
-				<DropdownMenuItem className=" text-red-500">
-					<button onClick={handleDelete}>Delete column</button>
-				</DropdownMenuItem>
+				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
+					<EditColumnName columnId={columnId} />
+				</div>
+				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
+					<AlertDialog>
+						<AlertDialogTrigger className="text-red-500">
+							Delete column
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+								<AlertDialogDescription>
+									This action cannot be undone, and your column will be
+									permanently deleted.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={handleDelete}
+									className="bg-red-500 hover:bg-red-600"
+								>
+									Delete
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
