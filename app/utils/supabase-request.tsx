@@ -1,19 +1,19 @@
 import { supabaseClient } from "./supabase-client";
 
-export const getTasks = async ({
-	userId,
-	token,
-}: {
-	userId: string;
-	token: string;
-}) => {
-	const supabase = await supabaseClient(token);
-	const { data: tasks } = await supabase
-		.from("tasks")
-		.select("*")
-		.eq("user_id", userId);
-	return tasks;
-};
+// export const getTasks = async ({
+// 	userId,
+// 	token,
+// }: {
+// 	userId: string;
+// 	token: string;
+// }) => {
+// 	const supabase = await supabaseClient(token);
+// 	const { data: tasks } = await supabase
+// 		.from("tasks")
+// 		.select("*")
+// 		.eq("user_id", userId);
+// 	return tasks;
+// };
 
 export const postTask = async ({
 	userId,
@@ -65,6 +65,30 @@ export const postProject = async ({
 	return newProject;
 };
 
+export const postColumn = async ({
+	token,
+	column,
+}: {
+	userId?: string;
+	token: string;
+	column: {
+		column_name: string;
+		project_id: number;
+		userId?: string;
+		// accessed_by: string[];
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: newColumn, error } = await supabase
+		.from("columns")
+		.insert([column]);
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return newColumn;
+};
+
 export const getProjects = async ({
 	userId,
 	token,
@@ -80,23 +104,23 @@ export const getProjects = async ({
 	return projects;
 };
 
-export const getColumns = async ({
-	userId,
-	token,
-	projectId,
-}: {
-	userId: string;
-	token: string;
-	projectId: number;
-}) => {
-	const supabase = await supabaseClient(token);
-	const { data: columns } = await supabase
-		.from("columns")
-		.select("*")
-		.eq("project_id", projectId)
-		.eq("user_id", userId);
-	return columns;
-};
+// export const getColumns = async ({
+// 	userId,
+// 	token,
+// 	projectId,
+// }: {
+// 	userId: string;
+// 	token: string;
+// 	projectId: number;
+// }) => {
+// 	const supabase = await supabaseClient(token);
+// 	const { data: columns } = await supabase
+// 		.from("columns")
+// 		.select("*")
+// 		.eq("project_id", projectId)
+// 		.eq("user_id", userId);
+// 	return columns;
+// };
 
 export const getColumnsBySlug = async ({
 	userId,
@@ -120,9 +144,8 @@ export const getColumnsBySlug = async ({
 	const { data: columns } = await supabase
 		.from("columns")
 		.select("*")
-		.eq("project_id", project.id)
-		// .eq("accessed_by", userId)
-		.contains("accessed_by", [userId, userId ?? ""]);
+		.eq("project_id", project.id);
+	// .contains("accessed_by", [userId, userId ?? ""]);
 	return columns;
 };
 
@@ -163,4 +186,47 @@ export const getTasksByColumnId = async ({
 		.select("*")
 		.eq("column_id", columnId);
 	return tasks;
+};
+
+export const updateColumn = async ({
+	token,
+	column,
+}: {
+	token: string;
+	column: {
+		name: string;
+		id: number;
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: updateColumn, error } = await supabase
+		.from("columns")
+		.update({ column_name: column.name })
+		.eq("id", column.id)
+		.select();
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return updateColumn;
+};
+
+export const deleteColumn = async ({
+	token,
+	columnId,
+}: {
+	token: string;
+	columnId: number;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data, error } = await supabase
+		.from("columns")
+		.delete()
+		.eq("id", columnId)
+		.select();
+	console.log(data, "deletedColumn");
+	if (error) {
+		console.log(error);
+		return false;
+	}
 };

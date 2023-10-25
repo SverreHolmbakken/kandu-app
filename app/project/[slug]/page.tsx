@@ -8,7 +8,7 @@ import {
 import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import ProjectNav from "@/app/components/layout/project-nav";
-import NewColumn from "@/app/components/layout/kanban/kanban-cloumn-new";
+import NewColumn from "@/app/components/layout/kanban/kanban-column-new";
 
 interface Props {
 	params: { slug: string };
@@ -25,10 +25,12 @@ const Page: FC<Props> = ({ params }) => {
 		column_name: string;
 		description: string;
 		project_id: number;
+		created_at: string;
 	}
 
 	interface Project {
 		name: string;
+		id: number;
 	}
 
 	useEffect(() => {
@@ -59,18 +61,29 @@ const Page: FC<Props> = ({ params }) => {
 		loadProject();
 	}, []);
 
+	const projectId = project?.id;
+	function compareNumbers(a: any, b: any) {
+		return a - b;
+	}
+
+	const sortedColumns = columns.sort((a, b) => {
+		const dateA = new Date(a.created_at);
+		const dateB = new Date(b.created_at);
+		return dateA.getTime() - dateB.getTime();
+	});
+
 	return (
-		<div>
+		<div className="">
 			<ProjectNav title={project?.name} />
-			<div className="h-[80vh] flex flex-row space-x-5 mx-5">
-				{columns.map((column) => (
+			<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
+				{sortedColumns.sort(compareNumbers).map((column) => (
 					<KanbanColumn
 						key={column.id}
 						name={column.column_name}
 						columnId={column.id}
 					/>
 				))}
-				<NewColumn />
+				<NewColumn projectId={projectId} userId={userId ?? ""} />
 			</div>
 		</div>
 	);

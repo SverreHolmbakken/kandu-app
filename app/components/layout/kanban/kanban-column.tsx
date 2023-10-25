@@ -2,10 +2,11 @@
 
 import { useState, useEffect, FC } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { getTasksByColumnId } from "@/app/utils/supabase-request";
+import { getTasksByColumnId, updateColumn } from "@/app/utils/supabase-request";
 import CreateTaskModal from "./task-modal";
 import EditColumn from "./kanban-column-edit";
 import Task from "./task";
+import EditableText from "@/app/utils/editable-text";
 
 interface KanbanColumnProps {
 	name: string;
@@ -37,15 +38,21 @@ const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 	}, []);
 
 	return (
-		<div className="rounded-md border w-1/4 h-full overflow-hidden min-w-fit dark:border-zinc-600">
+		<div className="rounded-md border w-1/4 min-w-[350px] h-full overflow-hidden dark:border-zinc-600">
 			<header className="bg-slate-50 sticky top-0 z-10">
 				<div className="h-12 px-4 text-left align-middle border-b font-medium text-slate-700 dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-600 flex items-center justify-between">
-					<div className="mr-2">{name}</div>
+					<div className="mr-2">
+						<EditableText
+							initialText={name}
+							columnId={columnId}
+							name={name}
+						/>
+					</div>
 					<div className="ml-auto flex items-center">
 						<CreateTaskModal columnId={columnId} />
 					</div>
 					<div className="ml-2 flex items-center">
-						<EditColumn />
+						<EditColumn columnId={columnId} />
 					</div>
 				</div>
 			</header>
