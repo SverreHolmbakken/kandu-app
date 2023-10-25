@@ -25,6 +25,7 @@ const Page: FC<Props> = ({ params }) => {
 		column_name: string;
 		description: string;
 		project_id: number;
+		created_at: string;
 	}
 
 	interface Project {
@@ -60,21 +61,29 @@ const Page: FC<Props> = ({ params }) => {
 		loadProject();
 	}, []);
 
-	console.log(project, "project");
 	const projectId = project?.id;
+	function compareNumbers(a: any, b: any) {
+		return a - b;
+	}
+
+	const sortedColumns = columns.sort((a, b) => {
+		const dateA = new Date(a.created_at);
+		const dateB = new Date(b.created_at);
+		return dateA.getTime() - dateB.getTime();
+	});
 
 	return (
 		<div className="">
 			<ProjectNav title={project?.name} />
 			<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
-				{columns.map((column) => (
+				{sortedColumns.sort(compareNumbers).map((column) => (
 					<KanbanColumn
 						key={column.id}
 						name={column.column_name}
 						columnId={column.id}
 					/>
 				))}
-				<NewColumn projectId={projectId} />
+				<NewColumn projectId={projectId} userId={userId ?? ""} />
 			</div>
 		</div>
 	);
