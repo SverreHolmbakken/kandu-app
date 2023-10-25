@@ -3,10 +3,17 @@ import { Plus } from "lucide-react";
 import { postColumn } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
 
-export default function NewColumn({ projectId }: { projectId?: number }) {
+export default function NewColumn({
+	projectId,
+	userId,
+}: {
+	projectId?: number;
+	userId?: string;
+}) {
 	type Column = {
 		column_name: string;
 		project_id: number;
+		user_id?: string;
 	};
 	const { getToken } = useAuth();
 
@@ -14,6 +21,7 @@ export default function NewColumn({ projectId }: { projectId?: number }) {
 		const column: Column = {
 			column_name: "New column",
 			project_id: projectId,
+			user_id: userId,
 		};
 		const token = await getToken({ template: "supabase" });
 		const response = await postColumn({
