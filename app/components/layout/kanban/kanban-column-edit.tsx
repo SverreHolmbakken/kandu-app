@@ -30,6 +30,7 @@ export default function EditColumn({ columnId }: { columnId: number }) {
 			token: token ?? "",
 			columnId: columnId,
 		});
+		document.location.reload();
 	}
 	console.log(columnId, "columnId");
 
