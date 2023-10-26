@@ -7,32 +7,25 @@ import CreateTaskModal from "./task-modal";
 import EditColumn from "./kanban-column-edit";
 import Task from "./task";
 import EditableText from "@/app/utils/editable-text";
+import { TaskType, KanbanColumnProps } from "@/Types";
 
-interface KanbanColumnProps {
-	name: string;
-	columnId: number;
-}
+import { atom, useAtom } from "jotai";
+import { tasksAtom } from "@/Atoms";
 
 const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 	const { userId, getToken } = useAuth();
-	const [tasks, setTasks] = useState<Task[]>([]);
-
-	interface Task {
-		id: number;
-		title: string;
-		description: string;
-		column_id: number;
-	}
+	// const [tasks, setTasks] = useState<TaskType[]>([]);
+	const [tasks, setTasks] = useAtom<TaskType[]>(tasksAtom);
 
 	useEffect(() => {
 		const loadTasks = async () => {
 			const token = await getToken({ template: "supabase" });
-			const tasks = await getTasksByColumnId({
+			const fetchedTasks = await getTasksByColumnId({
 				userId: userId ?? "",
 				token: token ?? "",
 				columnId: columnId,
 			});
-			setTasks(tasks || []);
+			setTasks(fetchedTasks || []);
 		};
 		loadTasks();
 	}, []);

@@ -35,6 +35,9 @@ import {
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
 import { postTask } from "@/app/utils/supabase-request";
+import { useAtom } from "jotai";
+import { tasksAtom } from "@/Atoms";
+import { TaskType } from "@/Types";
 
 const formSchema = z.object({
 	taskTitle: z.string().min(1).max(30),
@@ -43,6 +46,7 @@ const formSchema = z.object({
 });
 
 export default function CreateTaskModal({ columnId }: { columnId: number }) {
+	const [tasks, setTasks] = useAtom<TaskType[]>(tasksAtom);
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -58,6 +62,15 @@ export default function CreateTaskModal({ columnId }: { columnId: number }) {
 		console.log(values);
 		console.log(userId);
 		newTask();
+		console.log(tasks);
+		setTasks([
+			...tasks,
+			{
+				title: values.taskTitle,
+				description: values.taskDescription,
+				column_id: columnId,
+			},
+		]);
 
 		try {
 			form.reset({

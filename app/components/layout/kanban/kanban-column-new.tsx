@@ -2,6 +2,9 @@ import React from "react";
 import { Plus } from "lucide-react";
 import { postColumn } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
+import { useAtom } from "jotai";
+import { ColumnType } from "@/Types";
+import { columnsAtom } from "@/Atoms";
 
 export default function NewColumn({
 	projectId,
@@ -15,6 +18,7 @@ export default function NewColumn({
 		project_id: number;
 		user_id?: string;
 	};
+	const [columns, setColumns] = useAtom<ColumnType[]>(columnsAtom);
 	const { getToken } = useAuth();
 
 	const newColumn = async (projectId: number) => {
@@ -28,6 +32,15 @@ export default function NewColumn({
 			token: token ?? "",
 			column: column,
 		});
+		setColumns([
+			...columns,
+			{
+				id: response?.id ?? null,
+				column_name: "New Column",
+				project_id: projectId,
+				created_at: Date.now().toString(),
+			},
+		]);
 	};
 
 	function handleClick() {

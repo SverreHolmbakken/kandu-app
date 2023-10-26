@@ -9,6 +9,9 @@ import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import ProjectNav from "@/app/components/layout/project-nav";
 import NewColumn from "@/app/components/layout/kanban/kanban-column-new";
+import { atom, useAtom } from "jotai";
+import { ColumnType } from "@/Types";
+import { columnsAtom } from "@/Atoms";
 
 interface Props {
 	params: { slug: string };
@@ -17,16 +20,9 @@ interface Props {
 const Page: FC<Props> = ({ params }) => {
 	const { getToken, userId } = useAuth();
 
-	const [columns, setColumns] = useState<Column[]>([]);
+	// const [columns, setColumns] = useState<Column[]>([]);
 	const [project, setProject] = useState<Project | null>(null);
-
-	interface Column {
-		id: number;
-		column_name: string;
-		description: string;
-		project_id: number;
-		created_at: string;
-	}
+	const [columns, setColumns] = useAtom<ColumnType[]>(columnsAtom);
 
 	interface Project {
 		name: string;
@@ -67,8 +63,8 @@ const Page: FC<Props> = ({ params }) => {
 	}
 
 	const sortedColumns = columns.sort((a, b) => {
-		const dateA = new Date(a.created_at);
-		const dateB = new Date(b.created_at);
+		const dateA = new Date(a?.created_at);
+		const dateB = new Date(b?.created_at);
 		return dateA.getTime() - dateB.getTime();
 	});
 
