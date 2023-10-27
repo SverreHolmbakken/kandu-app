@@ -3,6 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useMemo, useState } from "react";
 import TaskCard from "./demo-task";
 import { Separator } from "../ui/separator";
+import { Grip } from "lucide-react";
 
 export type Id = string | number;
 
@@ -63,11 +64,12 @@ function ColumnContainer({ column, tasks }: Props) {
 		<div
 			ref={setNodeRef}
 			style={style}
-			className="h-full w-full border rounded-lg p-4 overflow-y-scroll bg-white dark:bg-zinc-900 dark:border-zinc-900/50 dark:shadow-2xl"
+			className="h-full w-full border rounded-lg p-4 overflow-y-scroll bg-white dark:bg-zinc-900 dark:border-zinc-700/50 dark:shadow-2xl dark:text-white-50"
 		>
 			{/* Column title */}
-			<div className="" {...attributes} {...listeners}>
+			<div className="flex justify-between" {...attributes} {...listeners}>
 				<div>{column.title}</div>
+				<Grip className=" opacity-50" />
 			</div>
 			<Separator className="my-2" />
 			{/* Column task container */}
