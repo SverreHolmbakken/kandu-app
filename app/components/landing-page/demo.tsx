@@ -15,6 +15,7 @@ import { createPortal } from "react-dom";
 import TaskCard from "./demo-task";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Hand, Move } from "lucide-react";
 
 export type Id = string | number;
 
@@ -146,14 +147,14 @@ function Demo() {
 
 	return (
 		<motion.section
-			className="grid h-screen mt-28"
+			className="grid h-screen"
 			animate={inView ? "visible" : "hidden"}
 			variants={variants}
 			exit="hidden"
 			transition={{ duration: 0.5 }}
 			ref={ref}
 		>
-			<div className="justify-self-end text-right mr-20">
+			<div className="justify-self-end text-right mr-20 mt-20">
 				<span className="text-4xl font-bold ">
 					Organize and plan your project with your team
 				</span>
@@ -168,7 +169,7 @@ function Demo() {
 				onDragOver={onDragOver}
 			>
 				<SortableContext items={columnsId}>
-					<div className="flex flex-row justify-self-center p-5 space-x-5 w-[85vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-zinc-900 dark:border-zinc-900/50 dark:shadow-2xl">
+					<div className="flex flex-row justify-self-center p-5 space-x-5 w-[85vw] h-[60vh] border shadow-xl rounded-xl bg-gradient-to-br from-indigo-600/10 via-transparent to-purple-700/10 dark:bg-zinc-900 dark:border-zinc-900/50 dark:shadow-2xl">
 						{columns.map((col) => (
 							<ColumnContainer
 								key={col.id}
@@ -194,6 +195,12 @@ function Demo() {
 					document.body
 				)}
 			</DndContext>
+			<p className="flex justify-center opacity-60">
+				Grab &nbsp;
+				<Hand />
+				&nbsp;columns and tasks to move them around &nbsp;
+				<Move />
+			</p>
 		</motion.section>
 	);
 
