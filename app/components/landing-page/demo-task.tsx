@@ -53,9 +53,7 @@ function TaskCard({ task }: Props) {
 			<div
 				ref={setNodeRef}
 				style={style}
-				className="
-        opacity-30 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl cursor-grab relative
-      "
+				className="opacity-60 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl cursor-grab relative"
 			/>
 		);
 	}
