@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronDownSquare } from "lucide-react";
+import { ArrowBigDownDash } from "lucide-react";
 
 export default function Hero() {
 	return (
-		<section className="h-screen">
+		<section className="h-screen relative">
 			<div className="text-5xl font-extrabold w-[50vw] m-20">
 				<motion.span
 					className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
@@ -51,9 +51,7 @@ export default function Hero() {
 					className=""
 				/>
 			</motion.div>
-			<div className="flex absolute justify-center bottom-0 left-1/2 animate-bounce z-20">
-				<ChevronDownSquare className="text-slate-700/50 w-10 h-10" />
-			</div>
+			<ArrowBigDownDash className="absolute bottom-24 left-1/2 animate-bounce opacity-40" />
 		</section>
 	);
 }
