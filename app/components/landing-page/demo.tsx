@@ -136,7 +136,7 @@ function Demo() {
 
 	const [ref, inView] = useInView({
 		threshold: 1,
-		triggerOnce: false,
+		triggerOnce: true,
 	});
 
 	const variants = {
@@ -145,7 +145,14 @@ function Demo() {
 	};
 
 	return (
-		<section className="grid h-screen mt-28">
+		<motion.section
+			className="grid h-screen mt-28"
+			animate={inView ? "visible" : "hidden"}
+			variants={variants}
+			exit="hidden"
+			transition={{ duration: 0.5 }}
+			ref={ref}
+		>
 			<div className="justify-self-end text-right mr-20">
 				<span className="text-4xl font-bold ">
 					Organize and plan your project with your team
@@ -160,15 +167,8 @@ function Demo() {
 				onDragEnd={onDragEnd}
 				onDragOver={onDragOver}
 			>
-				<motion.div
-					className="flex flex-row justify-self-center p-5 space-x-5 w-[85vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-zinc-900 dark:border-zinc-900/50 dark:shadow-2xl"
-					animate={inView ? "visible" : "hidden"}
-					variants={variants}
-					exit="hidden"
-					transition={{ duration: 0.5 }}
-					ref={ref}
-				>
-					<SortableContext items={columnsId}>
+				<SortableContext items={columnsId}>
+					<div className="flex flex-row justify-self-center p-5 space-x-5 w-[85vw] h-[60vh] border shadow-xl rounded-xl bg-white dark:bg-zinc-900 dark:border-zinc-900/50 dark:shadow-2xl">
 						{columns.map((col) => (
 							<ColumnContainer
 								key={col.id}
@@ -176,25 +176,25 @@ function Demo() {
 								tasks={tasks.filter((task) => task.columnId === col.id)}
 							/>
 						))}
-					</SortableContext>
+					</div>
+				</SortableContext>
 
-					{createPortal(
-						<DragOverlay>
-							{activeColumn && (
-								<ColumnContainer
-									column={activeColumn}
-									tasks={tasks.filter(
-										(task) => task.columnId === activeColumn.id
-									)}
-								/>
-							)}
-							{activeTask && <TaskCard task={activeTask} />}
-						</DragOverlay>,
-						document.body
-					)}
-				</motion.div>
+				{createPortal(
+					<DragOverlay>
+						{activeColumn && (
+							<ColumnContainer
+								column={activeColumn}
+								tasks={tasks.filter(
+									(task) => task.columnId === activeColumn.id
+								)}
+							/>
+						)}
+						{activeTask && <TaskCard task={activeTask} />}
+					</DragOverlay>,
+					document.body
+				)}
 			</DndContext>
-		</section>
+		</motion.section>
 	);
 
 	function onDragStart(event: DragStartEvent) {
