@@ -3,6 +3,7 @@
 import { useAuth } from "@clerk/nextjs";
 import Hero from "./components/landing-page/hero";
 import Demo from "./components/landing-page/demo";
+import About from "./components/landing-page/about";
 
 export default function Home() {
 	return (
@@ -12,6 +13,7 @@ export default function Home() {
 			<main className="flex flex-col justify-between">
 				<Hero />
 				<Demo />
+				<About />
 			</main>
 		</div>
 	);
