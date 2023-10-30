@@ -35,23 +35,31 @@ import {
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
 import { postTask } from "@/app/utils/supabase-request";
-import { useAtom } from "jotai";
-import { tasksAtom } from "@/Atoms";
 import { TaskType } from "@/Types";
+import { v4 as uuidv4 } from "uuid";
 
 const formSchema = z.object({
+	taskId: z.string(),
 	taskTitle: z.string().min(1).max(30),
 	taskDescription: z.string().min(1).max(200),
-	taskColumn: z.number(),
+	taskColumn: z.string(),
 });
 
-export default function CreateTaskModal({ columnId }: { columnId: number }) {
-	const [tasks, setTasks] = useAtom<TaskType[]>(tasksAtom);
+export default function CreateTaskModal({
+	columnId,
+	tasks,
+	setTasks,
+}: {
+	columnId: string;
+	tasks: TaskType[];
+	setTasks: (tasks: TaskType[]) => void;
+}) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			taskId: uuidv4(),
 			taskTitle: "",
 			taskDescription: "",
 			taskColumn: columnId,
@@ -62,10 +70,10 @@ export default function CreateTaskModal({ columnId }: { columnId: number }) {
 		console.log(values);
 		console.log(userId);
 		newTask();
-		console.log(tasks);
 		setTasks([
 			...tasks,
 			{
+				task_id: values.taskId,
 				title: values.taskTitle,
 				description: values.taskDescription,
 				column_id: columnId,
@@ -83,14 +91,16 @@ export default function CreateTaskModal({ columnId }: { columnId: number }) {
 	}
 
 	interface Task {
+		task_id: string;
 		title: string;
 		description: string;
-		column_id: number;
+		column_id: string;
 	}
 
 	const newTask = async () => {
-		const { taskTitle, taskDescription } = form.getValues();
+		const { taskId, taskTitle, taskDescription } = form.getValues();
 		const task: Task = {
+			task_id: taskId,
 			title: taskTitle,
 			description: taskDescription,
 			column_id: columnId,

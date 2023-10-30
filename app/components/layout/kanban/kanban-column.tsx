@@ -2,20 +2,16 @@
 
 import { useState, useEffect, FC } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { getTasksByColumnId, updateColumn } from "@/app/utils/supabase-request";
+import { getTasksByColumnId } from "@/app/utils/supabase-request";
 import CreateTaskModal from "./task-modal";
 import EditColumn from "./kanban-column-edit";
 import Task from "./task";
 import EditableText from "@/app/utils/editable-text";
 import { TaskType, KanbanColumnProps } from "@/Types";
 
-import { atom, useAtom } from "jotai";
-import { tasksAtom } from "@/Atoms";
-
 const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 	const { userId, getToken } = useAuth();
-	// const [tasks, setTasks] = useState<TaskType[]>([]);
-	const [tasks, setTasks] = useAtom<TaskType[]>(tasksAtom);
+	const [tasks, setTasks] = useState<TaskType[]>([]);
 
 	useEffect(() => {
 		const loadTasks = async () => {
@@ -42,7 +38,11 @@ const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 						/>
 					</div>
 					<div className="ml-auto flex items-center">
-						<CreateTaskModal columnId={columnId} />
+						<CreateTaskModal
+							columnId={columnId}
+							tasks={tasks}
+							setTasks={setTasks}
+						/>
 					</div>
 					<div className="ml-2 flex items-center">
 						<EditColumn columnId={columnId} />
@@ -52,7 +52,7 @@ const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 			<div className="h-full transition-colors hover:bg-slate-100/50 dark:hover:bg-zinc-800/50 overflow-y-auto">
 				<div className="flex flex-col gap-4 p-4 align-middle">
 					{tasks.map((task) => (
-						<Task key={task.id} task={task} />
+						<Task key={task.task_id} task={task} />
 					))}
 				</div>
 			</div>
