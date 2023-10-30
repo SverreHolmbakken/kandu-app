@@ -9,11 +9,11 @@ export default function EditableText({ initialText, columnId }: any) {
 	const { getToken } = useAuth();
 
 	type Column = {
-		id: number;
+		id: string;
 		name: string;
 	};
 
-	const updateColumnName = async (columnId: number) => {
+	const updateColumnName = async (columnId: string) => {
 		const column: Column = {
 			name: text,
 			id: columnId,
