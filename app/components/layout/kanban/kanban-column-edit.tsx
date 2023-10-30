@@ -21,7 +21,7 @@ import {
 	AlertDialogHeader,
 } from "../../ui/alert-dialog";
 
-export default function EditColumn({ columnId }: { columnId: number }) {
+export default function EditColumn({ columnId }: { columnId: string }) {
 	const { getToken } = useAuth();
 
 	async function handleDelete() {
@@ -37,7 +37,9 @@ export default function EditColumn({ columnId }: { columnId: number }) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<MoreHorizontal className="cursor-pointer" />
+				<button>
+					<MoreHorizontal className="cursor-pointer" />
+				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">

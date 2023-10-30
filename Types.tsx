@@ -1,19 +1,19 @@
 export type TaskType = {
-	id: number;
+	task_id: string;
 	title: string;
 	description: string;
-	column_id: number;
+	column_id: string;
 };
 
 export type KanbanColumnProps = {
 	name: string;
-	columnId: number;
+	columnId: string;
 };
 
 export type ColumnType = {
-	id: number;
+	id?: number;
+	column_id: string;
 	column_name: string;
-	description: string;
 	project_id: number;
 	created_at: string;
 };
