@@ -25,7 +25,7 @@ export const postTask = async ({
 	task: {
 		title: string;
 		description: string;
-		column_id: number;
+		column_id: string;
 	};
 }) => {
 	const supabase = await supabaseClient(token);
@@ -178,7 +178,7 @@ export const getTasksByColumnId = async ({
 }: {
 	userId: string;
 	token: string;
-	columnId: number;
+	columnId: string;
 }) => {
 	const supabase = await supabaseClient(token);
 	const { data: tasks } = await supabase
@@ -195,14 +195,14 @@ export const updateColumn = async ({
 	token: string;
 	column: {
 		name: string;
-		id: number;
+		id: string;
 	};
 }) => {
 	const supabase = await supabaseClient(token);
 	const { data: updateColumn, error } = await supabase
 		.from("columns")
 		.update({ column_name: column.name })
-		.eq("id", column.id)
+		.eq("column_id", column.id)
 		.select();
 	if (error) {
 		console.log(error);
@@ -216,13 +216,13 @@ export const deleteColumn = async ({
 	columnId,
 }: {
 	token: string;
-	columnId: number;
+	columnId: string;
 }) => {
 	const supabase = await supabaseClient(token);
 	const { data, error } = await supabase
 		.from("columns")
 		.delete()
-		.eq("id", columnId)
+		.eq("column_id", columnId)
 		.select();
 	console.log(data, "deletedColumn");
 	if (error) {

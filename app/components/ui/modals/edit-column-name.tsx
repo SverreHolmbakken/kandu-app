@@ -38,10 +38,10 @@ import { postTask, updateColumn } from "@/app/utils/supabase-request";
 
 const formSchema = z.object({
 	columnName: z.string().min(1).max(30),
-	columnId: z.number(),
+	columnId: z.string(),
 });
 
-export default function EditColumnName({ columnId }: { columnId: number }) {
+export default function EditColumnName({ columnId }: { columnId: string }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -68,7 +68,7 @@ export default function EditColumnName({ columnId }: { columnId: number }) {
 
 	type Column = {
 		name: string;
-		id: number;
+		id: string;
 	};
 
 	const updateColumnName = async () => {
