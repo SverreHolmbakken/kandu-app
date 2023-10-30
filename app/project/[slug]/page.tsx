@@ -85,7 +85,7 @@ const Page: FC<Props> = ({ params }) => {
 					<KanbanColumn
 					key={column.id}
 					name={column.column_name}
-					columnId={column.id}
+					columnId={column.column_id}
 					/>
 					))}
 		</>
