@@ -9,6 +9,7 @@ import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import ProjectNav from "@/app/components/layout/project-nav";
 import NewColumn from "@/app/components/layout/kanban/kanban-column-new";
+import { Skeleton } from "@/app/components/ui/skeleton";
 
 interface Props {
 	params: { slug: string };
@@ -19,6 +20,7 @@ const Page: FC<Props> = ({ params }) => {
 
 	const [columns, setColumns] = useState<Column[]>([]);
 	const [project, setProject] = useState<Project | null>(null);
+	const [loading, setLoading] = useState(true);
 
 	interface Column {
 		id: number;
@@ -42,6 +44,7 @@ const Page: FC<Props> = ({ params }) => {
 				slug: params.slug,
 			});
 			setColumns(columns || []);
+			setLoading(false);
 		};
 		loadColumns();
 	}, []);
@@ -57,6 +60,7 @@ const Page: FC<Props> = ({ params }) => {
 			});
 			console.log(project);
 			setProject(project || []);
+			setLoading(false);
 		};
 		loadProject();
 	}, []);
@@ -76,14 +80,24 @@ const Page: FC<Props> = ({ params }) => {
 		<div className="">
 			<ProjectNav title={project?.name} />
 			<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
+			{loading ? (
+					<div className="flex flex-row space-x-5">
+						<Skeleton className="h-full w-1/3 min-w-[350px]"/>
+						<Skeleton className="h-full w-1/3 min-w-[350px]"/>
+						<Skeleton className="h-full w-1/3 min-w-[350px]"/>
+					</div>
+			) : (
+				<>
 				{sortedColumns.sort(compareNumbers).map((column) => (
 					<KanbanColumn
-						key={column.id}
-						name={column.column_name}
-						columnId={column.id}
+					key={column.id}
+					name={column.column_name}
+					columnId={column.id}
 					/>
-				))}
-				<NewColumn projectId={projectId} userId={userId ?? ""} />
+					))}
+		</>
+			)}
+			<NewColumn projectId={projectId} userId={userId ?? ""} />
 			</div>
 		</div>
 	);
