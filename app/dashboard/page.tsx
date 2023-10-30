@@ -5,12 +5,14 @@ import { useAuth } from "@clerk/nextjs";
 import { getProjects } from "../utils/supabase-request";
 import CreateProjectCard from "../components/ui/create-project-card";
 import ProjectCard from "../components/ui/project-card";
+import { Skeleton } from "../components/ui/skeleton";
 
 export default function Dashboard() {
 	const { userId, getToken } = useAuth();
 
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [cardColor, setCardColor] = useState<string>("");
+	const [loading, setLoading] = useState(true);
 
 	interface Project {
 		id: number;
@@ -34,6 +36,7 @@ export default function Dashboard() {
 			if (projects !== null) {
 				setProjects(projects);
 				setCardColor(projects[0].card_color);
+				setLoading(false);
 			}
 		};
 		loadProject();
@@ -47,7 +50,11 @@ export default function Dashboard() {
 					Projects
 				</h1>
 				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-					{projects
+				{loading ? (
+							<Skeleton className="h-80" />
+					) : ( 
+						<>
+						{projects
 						.map((project) => (
 							<ProjectCard
 								key={project.id}
@@ -67,6 +74,8 @@ export default function Dashboard() {
 							}
 							return 0;
 						})}
+					</>
+					)}
 					<CreateProjectCard />
 				</div>
 			</main>
