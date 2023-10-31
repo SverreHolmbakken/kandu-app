@@ -22,42 +22,50 @@ export default function ContactCard({
 	mail,
 }: AuthorProps) {
 	return (
-		<Card className="overflow-hidden w-64 shadow-lg">
+		<Card className=" flex flex-col overflow-hidden w-64 min-h-[530px] shadow-lg">
 			<div className="flex-none">
 				<Image
 					src={avatar}
 					alt="Authors avatar"
 					width={200}
 					height={200}
-					className="grayscale object-cover w-full h-48"
+					className="grayscale object-cover w-full h-64"
 				/>
 			</div>
-			<div className="flex flex-col flex-grow p-4 bg-white dark:bg-zinc-800">
+			<div className="flex flex-col flex-grow justify-between p-4 bg-white dark:bg-zinc-800">
 				<CardHeader>
 					<CardTitle>{name}</CardTitle>
 					<CardDescription>{title}</CardDescription>
 				</CardHeader>
-				<CardFooter className="flex gap-2 content-evenly p-4">
-					<a href={github}>
-						<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
-							<Github />
-						</button>
-					</a>
-					<a href={linkedin}>
-						<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
-							<Linkedin />
-						</button>
-					</a>
-					<a href="{cv}">
-						<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
-							<FileText />
-						</button>
-					</a>
-					<a href="mailto:{mail}">
-						<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
-							<Mail />
-						</button>
-					</a>
+				<CardFooter className="flex gap-2 content-evenly p-4 place-items-end">
+					{github && (
+						<a target="_blank" href={github}>
+							<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
+								<Github />
+							</button>
+						</a>
+					)}
+					{linkedin && (
+						<a target="_blank" href={linkedin}>
+							<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
+								<Linkedin />
+							</button>
+						</a>
+					)}
+					{cv && (
+						<a target="_blank" href={cv}>
+							<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
+								<FileText />
+							</button>
+						</a>
+					)}
+					{mail && (
+						<a href={`mailto:${mail}`}>
+							<button className="bg-white dark:bg-zinc-700 border shadow-sm rounded-sm p-2 ease-in-out duration-500 transition-all hover:rounded-3xl hover:invert">
+								<Mail />
+							</button>
+						</a>
+					)}
 				</CardFooter>
 			</div>
 		</Card>

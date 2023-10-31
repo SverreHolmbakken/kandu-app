@@ -5,14 +5,14 @@ import { authors } from "@/app/lib/authordata";
 export default function About() {
 	const authorList = authors;
 	return (
-		<section className="relative h-screen mt-20 overflow-hidden">
+		<section className="relative h-full md:h-screen mt-20 overflow-hidden">
 			<div className="ml-20">
 				<span className="text-4xl font-bold ">Get in touch with us</span>
 				<p className="text-l text-zinc-700">
 					Feel free to contact us via the links below.
 				</p>
 			</div>
-			<div className="flex justify-center items-center gap-11 h-3/4">
+			<div className="md:flex justify-center items-center gap-11 h-3/4 grid mt-20 md:m-0">
 				{authorList.map((author) => (
 					<ContactCard
 						name={author.name}

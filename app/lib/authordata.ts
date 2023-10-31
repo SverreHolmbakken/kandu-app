@@ -1,7 +1,8 @@
 export const authors = [
 	{
 		name: "Sverre Holmbakken",
-		avatar: "https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/images/profilePicture-Sverre.png?t=2023-10-31T13%3A33%3A12.670Z",
+		avatar:
+			"https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/images/profilePicture-Sverre.png?t=2023-10-31T13%3A33%3A12.670Z",
 		title: "Frontend developer",
 		github: "https://github.com/SverreHolmbakken",
 		linkedin: "https://www.linkedin.com/in/sverre-holmbakken/",
@@ -20,11 +21,22 @@ export const authors = [
 	},
 	{
 		name: "Camilla Meskestad Nysterud",
-		avatar: "https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/images/Nysterud_Camilla-sh.jpg?t=2023-10-31T13%3A27%3A36.593Z",
+		avatar:
+			"https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/images/Nysterud_Camilla-sh.jpg?t=2023-10-31T14%3A14%3A01.086Z",
 		title: "Frontend developer",
 		github: "https://github.com/camillamn",
 		linkedin: "https://www.linkedin.com/in/camilla-meskestad-nysterud/",
 		cv: "",
-		mail: "",
-	}
+		mail: "camilla.meskestad@gmail.com",
+	},
+	{
+		name: "Sergei Ravinski",
+		avatar:
+			"https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/images/sergeir.jpg",
+		title: "Frontend developer",
+		github: "https://github.com/SergeiRavinski",
+		linkedin: "https://www.linkedin.com/in/sergeiravinski/",
+		cv: "",
+		mail: "ravinski.sergei@gmail.com",
+	},
 ];
