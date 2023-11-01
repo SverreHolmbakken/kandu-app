@@ -9,6 +9,7 @@ import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/kanban-column";
 import ProjectNav from "@/app/components/layout/project-nav";
 import NewColumn from "@/app/components/layout/kanban/kanban-column-new";
+import { ColumnType } from "@/Types";
 import { Skeleton } from "@/app/components/ui/skeleton";
 
 interface Props {
@@ -18,17 +19,9 @@ interface Props {
 const Page: FC<Props> = ({ params }) => {
 	const { getToken, userId } = useAuth();
 
-	const [columns, setColumns] = useState<Column[]>([]);
+	const [columns, setColumns] = useState<ColumnType[]>([]);
 	const [project, setProject] = useState<Project | null>(null);
 	const [loading, setLoading] = useState(true);
-
-	interface Column {
-		id: number;
-		column_name: string;
-		description: string;
-		project_id: number;
-		created_at: string;
-	}
 
 	interface Project {
 		name: string;
@@ -71,8 +64,8 @@ const Page: FC<Props> = ({ params }) => {
 	}
 
 	const sortedColumns = columns.sort((a, b) => {
-		const dateA = new Date(a.created_at);
-		const dateB = new Date(b.created_at);
+		const dateA = new Date(a?.created_at);
+		const dateB = new Date(b?.created_at);
 		return dateA.getTime() - dateB.getTime();
 	});
 
@@ -92,12 +85,17 @@ const Page: FC<Props> = ({ params }) => {
 					<KanbanColumn
 					key={column.id}
 					name={column.column_name}
-					columnId={column.id}
+					columnId={column.column_id}
 					/>
 					))}
 		</>
 			)}
-			<NewColumn projectId={projectId} userId={userId ?? ""} />
+				<NewColumn
+					projectId={projectId}
+					userId={userId ?? ""}
+					columns={columns}
+					setColumns={setColumns}
+				/>
 			</div>
 		</div>
 	);
