@@ -62,7 +62,16 @@ export default function Hero() {
 					height="800"
 					quality="100"
 					priority={true}
-					className=""
+					className="dark:hidden block"
+				/>
+				<Image
+					src="/kandu-hero-image-dark.png"
+					alt=""
+					width="800"
+					height="800"
+					quality="100"
+					priority={true}
+					className="dark:block hidden"
 				/>
 			</motion.div>
 			<ArrowBigDownDash className="absolute bottom-5 left-1/2 animate-bounce opacity-40" />

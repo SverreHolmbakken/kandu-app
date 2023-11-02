@@ -16,7 +16,7 @@ export const authors = [
 		title: "Frontend developer",
 		github: "https://github.com/oyvindGg",
 		linkedin: "https://www.linkedin.com/in/%C3%B8yvindgjersum/",
-		cv: "",
+		cv: "https://hjojgyofdixsdnxbualg.supabase.co/storage/v1/object/public/cvs/CV%20-%20Oyvind%20Gjersum.pdf?t=2023-11-01T09%3A23%3A25.475Z",
 		mail: "oyvindg@live.no",
 	},
 	{
