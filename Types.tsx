@@ -27,3 +27,9 @@ export type ProjectType = {
 	slug: string;
 	created_at?: string;
 };
+
+export type ProjectShortType = {
+	name: string;
+	description: string;
+	slug: string;
+};
