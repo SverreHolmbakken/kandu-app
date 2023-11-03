@@ -3,12 +3,10 @@ import { MoreHorizontal } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import { deleteProject } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
-// import EditColumnName from "../../ui/modals/edit-column-name";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -20,6 +18,9 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 } from "../../../ui/alert-dialog";
+import { Dialog, DialogTrigger } from "@/app/components/ui/dialog";
+import { useToast } from "@/app/components/ui/use-toast";
+import ModalEditProject from "./modal-edit-project";
 
 export default function EditColumn({
 	slug,
@@ -31,6 +32,7 @@ export default function EditColumn({
 	projects: any;
 }) {
 	const { getToken } = useAuth();
+	const { toast } = useToast();
 
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
@@ -38,12 +40,14 @@ export default function EditColumn({
 			token: token ?? "",
 			slug: slug,
 		});
-		// document.location.reload();
 		setProjects((current: any[]) =>
 			current.filter((project) => project.slug !== slug)
 		);
+		toast({
+			title: "Success!",
+			description: "Project has been deleted.",
+		});
 	}
-	console.log(slug, "slug");
 
 	return (
 		<DropdownMenu>
@@ -53,9 +57,19 @@ export default function EditColumn({
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				{/* <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
-					<EditColumnName columnId={columnId} />
-				</div> */}
+				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
+					<Dialog>
+						<DialogTrigger className="text-secondaryDark">
+							Edit project
+						</DialogTrigger>
+
+						<ModalEditProject
+							setProjects={setProjects}
+							projects={projects}
+							slug={slug}
+						/>
+					</Dialog>
+				</div>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
 					<AlertDialog>
 						<AlertDialogTrigger className="text-red-500">
