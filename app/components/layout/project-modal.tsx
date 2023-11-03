@@ -40,7 +40,7 @@ import { ProjectType } from "@/Types";
 
 const formSchema = z.object({
 	projectName: z.string().min(1).max(30),
-	projectDescription: z.string().min(1).max(200),
+	projectDescription: z.string().min(0).max(200),
 });
 
 export default function ProjectModal({
@@ -66,18 +66,6 @@ export default function ProjectModal({
 		console.log(values);
 		console.log(userId);
 		newProject();
-		// setProjects([
-		// 	...projects,
-		// 	{
-		// 		name: values.projectName,
-		// 		description: values.projectDescription,
-		// 		accessed_by: [userId ?? ""],
-		// 		owner_id: userId ?? "",
-		// 		card_color: RandomHexColor(),
-		// 		slug: uuidv4(),
-		// 		created_at: date.toISOString(),
-		// 	},
-		// ]);
 
 		try {
 			form.reset({
@@ -100,14 +88,6 @@ export default function ProjectModal({
 
 	console.log(RandomHexColor());
 
-	// interface Project {
-	// 	name: string;
-	// 	description?: string;
-	// 	accessed_by: string[];
-	// 	owner_id: string;
-	// 	card_color: string;
-	// }
-
 	const newProject = async () => {
 		const { projectName, projectDescription } = form.getValues();
 		const project: ProjectType = {
@@ -125,6 +105,10 @@ export default function ProjectModal({
 			project: project,
 		});
 		setProjects([...projects, project]);
+		toast({
+			title: "Success!",
+			description: `${projectName} has been created`,
+		});
 	};
 
 	return (
@@ -144,7 +128,15 @@ export default function ProjectModal({
 							name="projectName"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Project name</FormLabel>
+									<FormLabel>
+										{" "}
+										<div className="flex flex-row gap-1">
+											Project name{" "}
+											<div className="text-xs text-red-400">
+												required
+											</div>
+										</div>
+									</FormLabel>
 									<FormControl>
 										<Input placeholder="project name" {...field} />
 									</FormControl>
@@ -170,16 +162,7 @@ export default function ProjectModal({
 						/>
 						<DialogFooter className="flex w-full justify-end">
 							<DialogPrimitive.Close asChild>
-								<Button
-									type="submit"
-									onClick={() => {
-										toast({
-											description: "Your project has been created.",
-										});
-									}}
-								>
-									Create project
-								</Button>
+								<Button type="submit">Create project</Button>
 							</DialogPrimitive.Close>
 						</DialogFooter>
 					</form>
