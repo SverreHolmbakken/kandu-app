@@ -230,3 +230,23 @@ export const deleteColumn = async ({
 		return false;
 	}
 };
+
+export const deleteProject = async ({
+	token,
+	slug,
+}: {
+	token: string;
+	slug: string;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data, error } = await supabase
+		.from("projects")
+		.delete()
+		.eq("slug", slug)
+		.select();
+	console.log(data, "deletedProject");
+	if (error) {
+		console.log(error);
+		return false;
+	}
+};

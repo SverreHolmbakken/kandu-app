@@ -28,12 +28,14 @@ export default function Dashboard() {
 	useEffect(() => {
 		const loadProject = async () => {
 			const token = await getToken({ template: "supabase" });
-			const projects = await getProjects({
+			const projects = (await getProjects({
 				userId: userId ?? "",
 				token: token ?? "",
-			});
+			})) as Project[];
 			console.log(projects);
-			if (projects !== null) {
+			if (projects.length === 0) {
+				setLoading(false);
+			} else if (projects !== null) {
 				setProjects(projects);
 				setCardColor(projects[0].card_color);
 				setLoading(false);
@@ -41,7 +43,6 @@ export default function Dashboard() {
 		};
 		loadProject();
 	}, []);
-	console.log(cardColor);
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
@@ -50,33 +51,40 @@ export default function Dashboard() {
 					Projects
 				</h1>
 				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-				{loading ? (
-							<Skeleton className="h-80" />
-					) : ( 
+					{loading ? (
+						<Skeleton className="h-80" />
+					) : (
 						<>
-						{projects
-						.map((project) => (
-							<ProjectCard
-								key={project.id}
-								name={project.name}
-								description={project.description}
-								date={new Date(project.created_at).toLocaleDateString()}
-								color={project.card_color}
-								slug={project.slug}
-							/>
-						))
-						.sort((a, b) => {
-							if (a.props.date > b.props.date) {
-								return 1;
-							}
-							if (a.props.date < b.props.date) {
-								return -1;
-							}
-							return 0;
-						})}
-					</>
+							{projects
+								.map((project) => (
+									<ProjectCard
+										key={project.id}
+										name={project.name}
+										description={project.description}
+										date={new Date(
+											project.created_at
+										).toLocaleDateString()}
+										color={project.card_color}
+										slug={project.slug}
+										setProjects={setProjects}
+										projects={projects}
+									/>
+								))
+								.sort((a, b) => {
+									if (a.props.date > b.props.date) {
+										return 1;
+									}
+									if (a.props.date < b.props.date) {
+										return -1;
+									}
+									return 0;
+								})}
+						</>
 					)}
-					<CreateProjectCard />
+					<CreateProjectCard
+						setProjects={setProjects}
+						projects={projects}
+					/>
 				</div>
 			</main>
 		</div>

@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as z from "zod";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	Dialog,
@@ -35,13 +36,20 @@ import {
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
 import { postProject } from "@/app/utils/supabase-request";
+import { ProjectType } from "@/Types";
 
 const formSchema = z.object({
 	projectName: z.string().min(1).max(30),
 	projectDescription: z.string().min(1).max(200),
 });
 
-export default function ProjectModal() {
+export default function ProjectModal({
+	setProjects,
+	projects,
+}: {
+	setProjects: (projects: any) => void;
+	projects: ProjectType[];
+}) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -52,10 +60,24 @@ export default function ProjectModal() {
 		},
 	});
 
+	const date = new Date();
+
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
 		console.log(userId);
 		newProject();
+		// setProjects([
+		// 	...projects,
+		// 	{
+		// 		name: values.projectName,
+		// 		description: values.projectDescription,
+		// 		accessed_by: [userId ?? ""],
+		// 		owner_id: userId ?? "",
+		// 		card_color: RandomHexColor(),
+		// 		slug: uuidv4(),
+		// 		created_at: date.toISOString(),
+		// 	},
+		// ]);
 
 		try {
 			form.reset({
@@ -78,28 +100,31 @@ export default function ProjectModal() {
 
 	console.log(RandomHexColor());
 
-	interface Project {
-		name: string;
-		description?: string;
-		accessed_by: string[];
-		owner_id: string;
-		card_color: string;
-	}
+	// interface Project {
+	// 	name: string;
+	// 	description?: string;
+	// 	accessed_by: string[];
+	// 	owner_id: string;
+	// 	card_color: string;
+	// }
 
 	const newProject = async () => {
 		const { projectName, projectDescription } = form.getValues();
-		const project: Project = {
+		const project: ProjectType = {
 			name: projectName,
 			description: projectDescription,
 			accessed_by: [userId ?? ""],
 			owner_id: userId ?? "",
 			card_color: RandomHexColor(),
+			slug: uuidv4(),
+			created_at: date.toISOString(),
 		};
 		const token = await getToken({ template: "supabase" });
 		const postNewProject = await postProject({
 			token: token ?? "",
 			project: project,
 		});
+		setProjects([...projects, project]);
 	};
 
 	return (

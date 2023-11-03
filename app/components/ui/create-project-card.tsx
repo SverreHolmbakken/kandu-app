@@ -4,11 +4,25 @@ import { useState } from "react";
 import { Plus, PlusSquare } from "lucide-react";
 import { Fragment } from "react";
 import { Dialog, DialogTrigger } from "@/app/components/ui/dialog";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardContent,
+	CardFooter,
+} from "./card";
 
 import { colors } from "@/app/utils/colors";
 import ProjectModal from "../layout/project-modal";
 
-export default function CreateProjectCard() {
+export default function CreateProjectCard({
+	setProjects,
+	projects,
+}: {
+	setProjects: any;
+	projects: any;
+}) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
 	function handleCreateProjectClick() {
@@ -31,13 +45,15 @@ export default function CreateProjectCard() {
 		<Dialog>
 			<DialogTrigger
 				onClick={handleCreateProjectClick}
-				className="flex place-items-center rounded-md h-80 place-content-center border-solid border-[1px] border-secondaryLight hover:opacity-90"
+				className="flex place-items-center h-80 place-content-center border-solid hover:opacity-90 rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
 			>
 				<div className="block w-5 h-5 justify-center">
 					<Plus className="text-secondaryDark" />
 				</div>
 			</DialogTrigger>
-			{modalIsOpen && <ProjectModal />}
+			{modalIsOpen && (
+				<ProjectModal setProjects={setProjects} projects={projects} />
+			)}
 		</Dialog>
 	);
 }
