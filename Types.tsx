@@ -17,3 +17,19 @@ export type ColumnType = {
 	project_id: number;
 	created_at: string;
 };
+
+export type ProjectType = {
+	name: string;
+	description: string;
+	accessed_by: string[];
+	owner_id: string;
+	card_color: string;
+	slug: string;
+	created_at?: string;
+};
+
+export type ProjectShortType = {
+	name: string;
+	description: string;
+	slug: string;
+};
