@@ -155,6 +155,50 @@ export const getTasksByColumnId = async ({
 	return tasks;
 };
 
+export const updateTask = async ({
+	token,
+	task,
+}: {
+	token: string;
+	task: {
+		name: string;
+		description: string;
+		task_id: string;
+	};
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data: updateColumn, error } = await supabase
+		.from("tasks")
+		.update({ title: task.name, description: task.description })
+		.eq("task_id", task.task_id)
+		.select();
+	if (error) {
+		console.log(error);
+		return false;
+	}
+	return updateColumn;
+};
+
+export const deleteTask = async ({
+	token,
+	taskId,
+}: {
+	token: string;
+	taskId: string;
+}) => {
+	const supabase = await supabaseClient(token);
+	const { data, error } = await supabase
+		.from("tasks")
+		.delete()
+		.eq("task_id", taskId)
+		.select();
+	console.log(data, "deletedColumn");
+	if (error) {
+		console.log(error);
+		return false;
+	}
+};
+
 export const updateColumn = async ({
 	token,
 	column,
