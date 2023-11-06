@@ -46,9 +46,9 @@ function Header() {
 
 				{isSignedIn && (
 					<div className="flex flex-row items-center">
-						<Button variant="link">
-							<Link href="/dashboard">Dashboard</Link>
-						</Button>
+						<Link href="/dashboard">
+							<Button variant="link">Dashboard</Button>
+						</Link>
 
 						<ClerkLoading>
 							<Skeleton className="h-8 w-8 bg-slate-400 rounded-full" />
