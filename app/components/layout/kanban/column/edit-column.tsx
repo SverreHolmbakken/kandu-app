@@ -20,9 +20,17 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 } from "../../../ui/alert-dialog";
+import { useToast } from "@/app/components/ui/use-toast";
 
-export default function EditColumn({ columnId }: { columnId: string }) {
+export default function EditColumn({
+	columnId,
+	setColumns,
+}: {
+	columnId: string;
+	setColumns: any;
+}) {
 	const { getToken } = useAuth();
+	const { toast } = useToast();
 
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
@@ -30,7 +38,13 @@ export default function EditColumn({ columnId }: { columnId: string }) {
 			token: token ?? "",
 			columnId: columnId,
 		});
-		document.location.reload();
+		setColumns((current: any[]) =>
+			current.filter((column) => column.column_id !== columnId)
+		);
+		toast({
+			title: "Congratulations!",
+			description: "Column has been deleted.",
+		});
 	}
 
 	return (

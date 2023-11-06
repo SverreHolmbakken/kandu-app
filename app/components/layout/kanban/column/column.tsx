@@ -9,7 +9,11 @@ import Task from "../task/task";
 import EditableText from "@/app/utils/editable-text";
 import { TaskType, KanbanColumnProps } from "@/Types";
 
-const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
+const KanbanColumn: FC<KanbanColumnProps> = ({
+	name,
+	columnId,
+	setColumns,
+}) => {
 	const { userId, getToken } = useAuth();
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 
@@ -47,7 +51,7 @@ const KanbanColumn: FC<KanbanColumnProps> = ({ name, columnId }) => {
 						/>
 					</div>
 					<div className="ml-2 flex items-center">
-						<EditColumn columnId={columnId} />
+						<EditColumn columnId={columnId} setColumns={setColumns} />
 					</div>
 				</div>
 			</header>
