@@ -5,6 +5,12 @@ export type TaskType = {
 	column_id: string;
 };
 
+export type TaskShortType = {
+	name: string;
+	description: string;
+	task_id: string;
+};
+
 export type KanbanColumnProps = {
 	name: string;
 	columnId: string;
