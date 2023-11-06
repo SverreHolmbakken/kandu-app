@@ -41,7 +41,7 @@ import { v4 as uuidv4 } from "uuid";
 const formSchema = z.object({
 	taskId: z.string(),
 	taskTitle: z.string().min(1).max(30),
-	taskDescription: z.string().min(1).max(200),
+	taskDescription: z.string().min(0).max(200),
 	taskColumn: z.string(),
 });
 
@@ -107,7 +107,7 @@ export default function CreateTaskModal({
 		setTasks([...tasks, task]);
 		toast({
 			title: "Success!",
-			description: "Your task has been created.",
+			description: "Task created.",
 		});
 	};
 
@@ -133,7 +133,15 @@ export default function CreateTaskModal({
 								name="taskTitle"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Task name</FormLabel>
+										<FormLabel>
+											{" "}
+											<div className="flex flex-row gap-1">
+												Task name{" "}
+												<div className="text-xs text-red-400">
+													required
+												</div>
+											</div>
+										</FormLabel>
 										<FormControl>
 											<Input placeholder="task name" {...field} />
 										</FormControl>
