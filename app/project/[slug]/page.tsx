@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
 	getColumnsBySlug,
 	getProjectBySlug,
@@ -11,6 +11,8 @@ import ProjectNav from "@/app/components/layout/kanban/project/project-nav";
 import NewColumn from "@/app/components/layout/kanban/column/new-column";
 import { ColumnType } from "@/Types";
 import { Skeleton } from "@/app/components/ui/skeleton";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 
 interface Props {
 	params: { slug: string };
@@ -22,6 +24,11 @@ const Page: FC<Props> = ({ params }) => {
 	const [columns, setColumns] = useState<ColumnType[]>([]);
 	const [project, setProject] = useState<Project | null>(null);
 	const [loading, setLoading] = useState(true);
+
+	const columnsId = useMemo(
+		() => columns.map((col) => col.column_id),
+		[columns]
+	);
 
 	interface Project {
 		name: string;
@@ -72,32 +79,34 @@ const Page: FC<Props> = ({ params }) => {
 	return (
 		<div className="">
 			<ProjectNav title={project?.name} />
-			<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
-				{loading ? (
-					<div className="flex flex-row space-x-5">
-						<Skeleton className="h-full w-1/3 min-w-[350px]" />
-						<Skeleton className="h-full w-1/3 min-w-[350px]" />
-						<Skeleton className="h-full w-1/3 min-w-[350px]" />
-					</div>
-				) : (
-					<>
-						{sortedColumns.sort(compareNumbers).map((column) => (
-							<KanbanColumn
-								key={column.id}
-								name={column.column_name}
-								columnId={column.column_id}
-								setColumns={setColumns}
-							/>
-						))}
-					</>
-				)}
-				<NewColumn
-					projectId={projectId}
-					userId={userId ?? ""}
-					columns={columns}
-					setColumns={setColumns}
-				/>
-			</div>
+			<DndContext>
+				<div className="h-[85vh] overflow-x-scroll flex flex-row space-x-5 mx-5">
+					{loading ? (
+						<div className="flex flex-row space-x-5">
+							<Skeleton className="h-full w-1/3 min-w-[350px]" />
+							<Skeleton className="h-full w-1/3 min-w-[350px]" />
+							<Skeleton className="h-full w-1/3 min-w-[350px]" />
+						</div>
+					) : (
+						<SortableContext items={columnsId}>
+							{sortedColumns.sort(compareNumbers).map((column) => (
+								<KanbanColumn
+									key={column.id}
+									name={column.column_name}
+									columnId={column.column_id}
+									setColumns={setColumns}
+								/>
+							))}
+						</SortableContext>
+					)}
+					<NewColumn
+						projectId={projectId}
+						userId={userId ?? ""}
+						columns={columns}
+						setColumns={setColumns}
+					/>
+				</div>
+			</DndContext>
 		</div>
 	);
 };
