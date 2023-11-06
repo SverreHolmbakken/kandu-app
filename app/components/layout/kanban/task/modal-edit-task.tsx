@@ -90,8 +90,6 @@ export default function ModalEditTask({
 			token: token ?? "",
 			task: task,
 		});
-		console.log(putEditTask);
-		console.log(taskId);
 		setTasks((current: any[]) =>
 			current.map((task) => {
 				if (task.task_id === taskId) {
