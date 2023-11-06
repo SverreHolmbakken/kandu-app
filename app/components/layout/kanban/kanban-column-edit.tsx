@@ -32,7 +32,6 @@ export default function EditColumn({ columnId }: { columnId: string }) {
 		});
 		document.location.reload();
 	}
-	console.log(columnId, "columnId");
 
 	return (
 		<DropdownMenu>
