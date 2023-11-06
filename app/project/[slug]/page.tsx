@@ -109,6 +109,10 @@ const Page: FC<Props> = ({ params }) => {
 			</DndContext>
 		</div>
 	);
+
+	function onDragStart(event: OnDragStartEvent) {
+		console.log("Drag start", event);
+	}
 };
 
 export default Page;
