@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/app/components/ui/dialog";
 
-import ProjectModal from "../layout/project-modal";
+import ProjectModal from "../layout/kanban/project/modal-project";
 
 export default function CreateProjectCard({
 	setProjects,

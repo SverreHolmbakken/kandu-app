@@ -5,10 +5,10 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { deleteColumn } from "@/app/utils/supabase-request";
+} from "../../../ui/dropdown-menu";
+import { deleteTask } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
-import EditColumnName from "../../ui/modals/edit-column-name";
+import EditColumnName from "../../../ui/modals/edit-column-name";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -19,35 +19,47 @@ import {
 	AlertDialogTrigger,
 	AlertDialogFooter,
 	AlertDialogHeader,
-} from "../../ui/alert-dialog";
+} from "../../../ui/alert-dialog";
+import { useToast } from "@/app/components/ui/use-toast";
+import ModalEditTask from "./modal-edit-task";
+import { Dialog, DialogTrigger } from "@/app/components/ui/dialog";
 
-export default function EditColumn({ columnId }: { columnId: string }) {
+export default function TaskOptions({ taskId }: { taskId: string }) {
 	const { getToken } = useAuth();
+	const { toast } = useToast();
 
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
-		await deleteColumn({
+		await deleteTask({
 			token: token ?? "",
-			columnId: columnId,
+			taskId: taskId,
 		});
-		document.location.reload();
+		toast({
+			title: "Success!",
+			description: "Task has been deleted.",
+		});
 	}
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button>
-					<MoreHorizontal className="cursor-pointer" />
+					<MoreHorizontal className="cursor-pointer text-slate-500" />
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
-					<EditColumnName columnId={columnId} />
+					<Dialog>
+						<DialogTrigger className="text-secondaryDark">
+							Edit task
+						</DialogTrigger>
+						<ModalEditTask taskId={taskId} />
+					</Dialog>
 				</div>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
 					<AlertDialog>
 						<AlertDialogTrigger className="text-red-500">
-							Delete column
+							Delete task
 						</AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
