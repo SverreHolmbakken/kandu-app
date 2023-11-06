@@ -42,7 +42,7 @@ export default function NewColumn({
 			...columns,
 			{
 				column_id: column.column_id,
-				column_name: "New Columns",
+				column_name: column.column_name,
 				project_id: projectId,
 				created_at: Date.now().toString(),
 			},

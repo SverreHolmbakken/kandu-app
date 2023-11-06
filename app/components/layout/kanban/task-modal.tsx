@@ -46,13 +46,13 @@ const formSchema = z.object({
 });
 
 export default function CreateTaskModal({
+	setTasks,
 	columnId,
 	tasks,
-	setTasks,
 }: {
+	setTasks: (tasks: TaskType[]) => void;
 	columnId: string;
 	tasks: TaskType[];
-	setTasks: (tasks: TaskType[]) => void;
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
@@ -70,20 +70,13 @@ export default function CreateTaskModal({
 		console.log(values);
 		console.log(userId);
 		newTask();
-		setTasks([
-			...tasks,
-			{
-				task_id: values.taskId,
-				title: values.taskTitle,
-				description: values.taskDescription,
-				column_id: columnId,
-			},
-		]);
 
 		try {
 			form.reset({
+				taskId: uuidv4(),
 				taskTitle: "",
 				taskDescription: "",
+				taskColumn: columnId,
 			});
 		} catch (error) {
 			console.error(error);
@@ -110,6 +103,11 @@ export default function CreateTaskModal({
 			userId: userId ?? "",
 			token: token ?? "",
 			task: task,
+		});
+		setTasks([...tasks, task]);
+		toast({
+			title: "Success!",
+			description: "Your task has been created.",
 		});
 	};
 
@@ -161,16 +159,7 @@ export default function CreateTaskModal({
 							/>
 							<DialogFooter className="flex w-full justify-end">
 								<DialogPrimitive.Close asChild>
-									<Button
-										type="submit"
-										onClick={() => {
-											toast({
-												description: "Your task has been created.",
-											});
-										}}
-									>
-										Create task
-									</Button>
+									<Button type="submit">Create task</Button>
 								</DialogPrimitive.Close>
 							</DialogFooter>
 						</form>

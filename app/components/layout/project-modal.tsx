@@ -86,8 +86,6 @@ export default function ProjectModal({
 		return color;
 	}
 
-	console.log(RandomHexColor());
-
 	const newProject = async () => {
 		const { projectName, projectDescription } = form.getValues();
 		const project: ProjectType = {
