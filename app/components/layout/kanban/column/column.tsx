@@ -3,9 +3,9 @@
 import { useState, useEffect, FC } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { getTasksByColumnId } from "@/app/utils/supabase-request";
-import CreateTaskModal from "./task-modal";
-import EditColumn from "./kanban-column-edit";
-import Task from "./task";
+import CreateTaskModal from "../modal-task";
+import EditColumn from "./column-edit";
+import Task from "../task";
 import EditableText from "@/app/utils/editable-text";
 import { TaskType, KanbanColumnProps } from "@/Types";
 

@@ -5,10 +5,10 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+} from "../../../ui/dropdown-menu";
 import { deleteColumn } from "@/app/utils/supabase-request";
 import { useAuth } from "@clerk/nextjs";
-import EditColumnName from "../../ui/modals/edit-column-name";
+import EditColumnName from "../../../ui/modals/edit-column-name";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -19,7 +19,7 @@ import {
 	AlertDialogTrigger,
 	AlertDialogFooter,
 	AlertDialogHeader,
-} from "../../ui/alert-dialog";
+} from "../../../ui/alert-dialog";
 
 export default function EditColumn({ columnId }: { columnId: string }) {
 	const { getToken } = useAuth();

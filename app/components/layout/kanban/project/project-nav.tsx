@@ -1,12 +1,12 @@
 import { UserButton } from "@clerk/nextjs";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarFallback } from "../../../ui/avatar";
 import { Plus } from "lucide-react";
 import {
 	TooltipProvider,
 	Tooltip,
 	TooltipTrigger,
 	TooltipContent,
-} from "../ui/tooltip";
+} from "../../../ui/tooltip";
 
 export default function ProjectNav(props: any) {
 	const { title } = props;
