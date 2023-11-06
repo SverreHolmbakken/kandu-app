@@ -1,4 +1,3 @@
-import { Edit } from "lucide-react";
 import {
 	Card,
 	CardHeader,
@@ -6,7 +5,8 @@ import {
 	CardDescription,
 	CardContent,
 	CardFooter,
-} from "../../ui/card";
+} from "../../../ui/card";
+import TaskOptions from "./task-options";
 
 export type TaskProps = {
 	task: any;
@@ -25,7 +25,7 @@ export default function Task({ task }: TaskProps) {
 							<div className="mr-2">{task.title}</div>
 						</div>
 						<div className="ml-2">
-							<Edit className="w-5 stroke-slate-500" />
+							<TaskOptions taskId={task.task_id} />
 						</div>
 					</div>
 				</CardTitle>

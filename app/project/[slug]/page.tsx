@@ -8,7 +8,7 @@ import {
 import { useAuth } from "@clerk/nextjs";
 import KanbanColumn from "@/app/components/layout/kanban/column/column";
 import ProjectNav from "@/app/components/layout/kanban/project/project-nav";
-import NewColumn from "@/app/components/layout/kanban/column/column-new";
+import NewColumn from "@/app/components/layout/kanban/column/new-column";
 import { ColumnType } from "@/Types";
 import { Skeleton } from "@/app/components/ui/skeleton";
 
