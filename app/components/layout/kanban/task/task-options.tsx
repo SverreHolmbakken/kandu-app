@@ -24,7 +24,13 @@ import { useToast } from "@/app/components/ui/use-toast";
 import ModalEditTask from "./modal-edit-task";
 import { Dialog, DialogTrigger } from "@/app/components/ui/dialog";
 
-export default function TaskOptions({ taskId }: { taskId: string }) {
+export default function TaskOptions({
+	taskId,
+	setTasks,
+}: {
+	taskId: string;
+	setTasks: any;
+}) {
 	const { getToken } = useAuth();
 	const { toast } = useToast();
 
@@ -34,6 +40,9 @@ export default function TaskOptions({ taskId }: { taskId: string }) {
 			token: token ?? "",
 			taskId: taskId,
 		});
+		setTasks((current: any[]) =>
+			current.filter((task) => task.task_id !== taskId)
+		);
 		toast({
 			title: "Success!",
 			description: "Task has been deleted.",
@@ -53,7 +62,7 @@ export default function TaskOptions({ taskId }: { taskId: string }) {
 						<DialogTrigger className="text-secondaryDark">
 							Edit task
 						</DialogTrigger>
-						<ModalEditTask taskId={taskId} />
+						<ModalEditTask taskId={taskId} setTasks={setTasks} />
 					</Dialog>
 				</div>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">

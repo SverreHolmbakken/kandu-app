@@ -13,9 +13,10 @@ export type TaskProps = {
 	id?: number;
 	title?: string;
 	description?: string;
+	setTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-export default function Task({ task }: TaskProps) {
+export default function Task({ task, setTasks }: TaskProps) {
 	return (
 		<Card className="w-full">
 			<CardHeader>
@@ -25,7 +26,7 @@ export default function Task({ task }: TaskProps) {
 							<div className="mr-2">{task.title}</div>
 						</div>
 						<div className="ml-2">
-							<TaskOptions taskId={task.task_id} />
+							<TaskOptions taskId={task.task_id} setTasks={setTasks} />
 						</div>
 					</div>
 				</CardTitle>
