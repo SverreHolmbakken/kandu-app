@@ -42,12 +42,10 @@ const formSchema = z.object({
 
 export default function ModalEditTask({
 	taskId,
-}: // setTasks,
-// tasks,
-{
+	setTasks,
+}: {
 	taskId: string;
-	// setTasks: (tasks: any) => void;
-	// tasks: TaskType[];
+	setTasks: (tasks: any) => void;
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
@@ -93,7 +91,20 @@ export default function ModalEditTask({
 			task: task,
 		});
 		console.log(putEditTask);
-		// setTasks();
+		console.log(taskId);
+		setTasks((current: any[]) =>
+			current.map((task) => {
+				if (task.task_id === taskId) {
+					return {
+						...task,
+						title: taskName,
+						description: taskDescription,
+					};
+				} else {
+					return task;
+				}
+			})
+		);
 		toast({
 			title: "Success!",
 			description: `${taskName} has been edited!`,

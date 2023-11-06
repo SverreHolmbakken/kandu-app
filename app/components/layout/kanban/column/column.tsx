@@ -58,7 +58,7 @@ const KanbanColumn: FC<KanbanColumnProps> = ({
 			<div className="h-full transition-colors hover:bg-slate-100/50 dark:hover:bg-zinc-800/50 overflow-y-auto">
 				<div className="flex flex-col gap-4 p-4 align-middle">
 					{tasks.map((task) => (
-						<Task key={task.task_id} task={task} />
+						<Task key={task.task_id} task={task} setTasks={setTasks} />
 					))}
 				</div>
 			</div>
