@@ -86,6 +86,7 @@ const Page: FC<Props> = ({ params }) => {
 								key={column.id}
 								name={column.column_name}
 								columnId={column.column_id}
+								setColumns={setColumns}
 							/>
 						))}
 					</>

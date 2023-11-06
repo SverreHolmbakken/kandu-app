@@ -14,6 +14,7 @@ export type TaskShortType = {
 export type KanbanColumnProps = {
 	name: string;
 	columnId: string;
+	setColumns: React.Dispatch<React.SetStateAction<ColumnType[]>>;
 };
 
 export type ColumnType = {
