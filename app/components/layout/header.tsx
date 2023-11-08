@@ -1,6 +1,6 @@
 "use client";
 
-import { ClerkLoaded, ClerkLoading, UserButton, useAuth } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, OrganizationSwitcher, UserButton, useAuth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
@@ -45,7 +45,7 @@ function Header() {
 				)}
 
 				{isSignedIn && (
-					<div className="flex flex-row items-center">
+					<div className="flex flex-row items-center gap-3">
 						<Link href="/dashboard">
 							<Button variant="link">Dashboard</Button>
 						</Link>
@@ -55,6 +55,7 @@ function Header() {
 						</ClerkLoading>
 
 						<ClerkLoaded>
+							<OrganizationSwitcher />
 							<UserButton afterSignOutUrl="/" />
 						</ClerkLoaded>
 					</div>
