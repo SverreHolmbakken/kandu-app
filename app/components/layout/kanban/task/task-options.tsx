@@ -38,7 +38,8 @@ export default function TaskOptions({
 	const { getToken } = useAuth();
 	const { toast } = useToast();
 
-	const [open, setOpen] = React.useState(false);
+	const [openDialog, setOpenDialog] = React.useState(false);
+	const [openDropdown, setOpenDropdown] = React.useState(false);
 
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
@@ -56,7 +57,7 @@ export default function TaskOptions({
 	}
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
 			<DropdownMenuTrigger asChild>
 				<button>
 					<MoreHorizontal className="cursor-pointer text-slate-500" />
@@ -64,14 +65,15 @@ export default function TaskOptions({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
-					<Dialog open={open} onOpenChange={setOpen}>
+					<Dialog open={openDialog} onOpenChange={setOpenDialog}>
 						<DialogTrigger className="text-secondaryDark">
 							Edit task
 						</DialogTrigger>
 						<ModalEditTask
 							taskId={taskId}
 							setTasks={setTasks}
-							setOpen={setOpen}
+							setOpenDialog={setOpenDialog}
+							setOpenDropdown={setOpenDropdown}
 							taskName={taskName}
 							taskDescription={taskDescription}
 						/>

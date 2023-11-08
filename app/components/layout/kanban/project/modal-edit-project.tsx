@@ -43,13 +43,15 @@ const formSchema = z.object({
 export default function ModalEditProject({
 	slug,
 	setProjects,
-	setOpen,
+	setOpenDialog,
+	setOpenDropdown,
 	projectName,
 	projectDescription,
 }: {
 	slug: string;
 	setProjects: (projects: any) => void;
-	setOpen: (open: boolean) => void;
+	setOpenDialog: (open: boolean) => void;
+	setOpenDropdown: (open: boolean) => void;
 	projectName: string;
 	projectDescription: string;
 }) {
@@ -71,9 +73,10 @@ export default function ModalEditProject({
 		editProject();
 
 		if (result.success) {
-			setOpen(false);
+			setOpenDialog(false);
+			setOpenDropdown(false);
 		} else {
-			setOpen(true);
+			setOpenDialog(true);
 		}
 
 		try {

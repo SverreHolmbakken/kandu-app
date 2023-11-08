@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as z from "zod";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider, useFormContext, set } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -43,13 +43,15 @@ const formSchema = z.object({
 export default function ModalEditTask({
 	taskId,
 	setTasks,
-	setOpen,
+	setOpenDialog,
+	setOpenDropdown,
 	taskName,
 	taskDescription,
 }: {
 	taskId: string;
 	setTasks: (tasks: any) => void;
-	setOpen: (open: boolean) => void;
+	setOpenDialog: (open: boolean) => void;
+	setOpenDropdown: (open: boolean) => void;
 	taskName: string;
 	taskDescription: string;
 }) {
@@ -71,9 +73,10 @@ export default function ModalEditTask({
 		editProject();
 
 		if (result.success) {
-			setOpen(false);
+			setOpenDialog(false);
+			setOpenDropdown(false);
 		} else {
-			setOpen(true);
+			setOpenDialog(true);
 		}
 
 		try {

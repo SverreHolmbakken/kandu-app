@@ -45,17 +45,19 @@ export default function EditColumnName({
 	columnId,
 	setColumns,
 	setText,
+	setOpenDropdown,
 	text,
 }: {
 	columnId: string;
 	setColumns: (columns: any) => void;
 	setText: (text: string) => void;
+	setOpenDropdown: (open: boolean) => void;
 	text: string;
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpenDialog] = React.useState(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -73,9 +75,10 @@ export default function EditColumnName({
 		updateColumnName();
 
 		if (result.success) {
-			setOpen(false);
+			setOpenDialog(false);
+			setOpenDropdown(false);
 		} else {
-			setOpen(true);
+			setOpenDialog(true);
 		}
 
 		try {
@@ -118,7 +121,7 @@ export default function EditColumnName({
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={setOpenDialog}>
 			<DialogTrigger>Edit name</DialogTrigger>
 			<DialogContent>
 				<CardHeader>

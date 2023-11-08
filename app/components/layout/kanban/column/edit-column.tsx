@@ -36,6 +36,8 @@ export default function EditColumn({
 	const { getToken } = useAuth();
 	const { toast } = useToast();
 
+	const [openDropdown, setOpenDropdown] = React.useState(false);
+
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
 		await deleteColumn({
@@ -52,7 +54,7 @@ export default function EditColumn({
 	}
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
 			<DropdownMenuTrigger asChild>
 				<button>
 					<MoreHorizontal className="cursor-pointer" />
@@ -65,6 +67,7 @@ export default function EditColumn({
 						setColumns={setColumns}
 						text={text}
 						setText={setText}
+						setOpenDropdown={setOpenDropdown}
 					/>
 				</div>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
