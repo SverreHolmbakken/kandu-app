@@ -26,13 +26,20 @@ export default function EditColumn({
 	slug,
 	setProjects,
 	projects,
+	projectName,
+	projectDescription,
 }: {
 	slug: string;
 	setProjects: any;
 	projects: any;
+	projectName: string;
+	projectDescription: string;
 }) {
 	const { getToken } = useAuth();
 	const { toast } = useToast();
+
+	const [openDialog, setOpenDialog] = React.useState(false);
+	const [openDropdown, setOpenDropdown] = React.useState(false);
 
 	async function handleDelete() {
 		const token = await getToken({ template: "supabase" });
@@ -50,7 +57,7 @@ export default function EditColumn({
 	}
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
 			<DropdownMenuTrigger asChild>
 				<button>
 					<MoreHorizontal className="cursor-pointer text-secondaryDark" />
@@ -58,15 +65,18 @@ export default function EditColumn({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:hover:bg-zinc-800 dark:hover:text-slate-50">
-					<Dialog>
+					<Dialog open={openDialog} onOpenChange={setOpenDialog}>
 						<DialogTrigger className="text-secondaryDark">
 							Edit project
 						</DialogTrigger>
 
 						<ModalEditProject
 							setProjects={setProjects}
-							projects={projects}
 							slug={slug}
+							setOpenDialog={setOpenDialog}
+							setOpenDropdown={setOpenDropdown}
+							projectName={projectName}
+							projectDescription={projectDescription}
 						/>
 					</Dialog>
 				</div>

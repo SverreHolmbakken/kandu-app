@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as z from "zod";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider, useFormContext, set } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -41,21 +41,45 @@ const formSchema = z.object({
 	columnId: z.string(),
 });
 
-export default function EditColumnName({ columnId }: { columnId: string }) {
+export default function EditColumnName({
+	columnId,
+	setColumns,
+	setText,
+	setOpenDropdown,
+	text,
+}: {
+	columnId: string;
+	setColumns: (columns: any) => void;
+	setText: (text: string) => void;
+	setOpenDropdown: (open: boolean) => void;
+	text: string;
+}) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
+
+	const [open, setOpenDialog] = React.useState(false);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
-			columnName: "",
-			columnId: columnId,
-		},
 	});
 
+	useEffect(() => {
+		form.setValue("columnName", text);
+		form.setValue("columnId", columnId);
+	}, [columnId, text, form]);
+
 	function onSubmit(values: z.infer<typeof formSchema>) {
+		const result = formSchema.safeParse(values);
 		console.log(values);
 		console.log(userId);
 		updateColumnName();
+
+		if (result.success) {
+			setOpenDialog(false);
+			setOpenDropdown(false);
+		} else {
+			setOpenDialog(true);
+		}
 
 		try {
 			form.reset({
@@ -82,10 +106,22 @@ export default function EditColumnName({ columnId }: { columnId: string }) {
 			token: token ?? "",
 			column: column,
 		});
+		setColumns((current: any[]) =>
+			current.map((column) => {
+				if (column.column_id === columnId) {
+					return {
+						...column,
+						name: columnName,
+					};
+				}
+				return column;
+			})
+		);
+		setText(columnName);
 	};
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpenDialog}>
 			<DialogTrigger>Edit name</DialogTrigger>
 			<DialogContent>
 				<CardHeader>
@@ -112,19 +148,16 @@ export default function EditColumnName({ columnId }: { columnId: string }) {
 								)}
 							/>
 							<DialogFooter className="flex w-full justify-end">
-								<DialogPrimitive.Close asChild>
-									<Button
-										type="submit"
-										onClick={() => {
-											toast({
-												description:
-													"Column name has been updated.",
-											});
-										}}
-									>
-										Update column name
-									</Button>
-								</DialogPrimitive.Close>
+								<Button
+									type="submit"
+									onClick={() => {
+										toast({
+											description: "Column name has been updated.",
+										});
+									}}
+								>
+									Update column name
+								</Button>
 							</DialogFooter>
 						</form>
 					</Form>

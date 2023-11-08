@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { updateColumn } from "./supabase-request";
 import { useAuth } from "@clerk/nextjs";
 
-export default function EditableText({ initialText, columnId }: any) {
+export default function EditableText({ columnId, setText, text }: any) {
 	const [isEditing, setIsEditing] = useState(false);
-	const [text, setText] = useState(initialText);
 	const { getToken } = useAuth();
 
 	type Column = {

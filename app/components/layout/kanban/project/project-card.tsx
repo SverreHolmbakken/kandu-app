@@ -1,8 +1,8 @@
 import { CalendarDays } from "lucide-react";
 
 import Link from "next/link";
-import { Card, CardHeader, CardContent } from "./card";
-import EditProject from "../layout/kanban/project/edit-project";
+import { Card, CardHeader, CardContent } from "../../../ui/card";
+import EditProject from "./edit-project";
 
 interface ProjectCardProps {
 	name: string;
@@ -57,6 +57,8 @@ export default function ProjectCard({
 							slug={slug}
 							setProjects={setProjects}
 							projects={projects}
+							projectName={name}
+							projectDescription={description}
 						/>
 					</div>
 				</div>

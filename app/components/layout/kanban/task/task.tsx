@@ -26,7 +26,12 @@ export default function Task({ task, setTasks }: TaskProps) {
 							<div className="mr-2">{task.title}</div>
 						</div>
 						<div className="ml-2">
-							<TaskOptions taskId={task.task_id} setTasks={setTasks} />
+							<TaskOptions
+								taskId={task.task_id}
+								setTasks={setTasks}
+								taskName={task.title}
+								taskDescription={task.description}
+							/>
 						</div>
 					</div>
 				</CardTitle>

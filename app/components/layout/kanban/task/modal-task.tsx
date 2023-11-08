@@ -56,6 +56,9 @@ export default function CreateTaskModal({
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
+
+	const [open, setOpen] = React.useState(false);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -67,9 +70,16 @@ export default function CreateTaskModal({
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
+		const result = formSchema.safeParse(values);
 		console.log(values);
 		console.log(userId);
 		newTask();
+
+		if (result.success) {
+			setOpen(false);
+		} else {
+			setOpen(true);
+		}
 
 		try {
 			form.reset({
@@ -112,7 +122,7 @@ export default function CreateTaskModal({
 	};
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
 				{" "}
 				<PlusSquare />{" "}
@@ -166,9 +176,7 @@ export default function CreateTaskModal({
 								)}
 							/>
 							<DialogFooter className="flex w-full justify-end">
-								<DialogPrimitive.Close asChild>
-									<Button type="submit">Create task</Button>
-								</DialogPrimitive.Close>
+								<Button type="submit">Create task</Button>
 							</DialogFooter>
 						</form>
 					</Form>

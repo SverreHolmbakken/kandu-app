@@ -16,6 +16,7 @@ const KanbanColumn: FC<KanbanColumnProps> = ({
 }) => {
 	const { userId, getToken } = useAuth();
 	const [tasks, setTasks] = useState<TaskType[]>([]);
+	const [text, setText] = useState(name);
 
 	useEffect(() => {
 		const loadTasks = async () => {
@@ -38,9 +39,9 @@ const KanbanColumn: FC<KanbanColumnProps> = ({
 				<div className="h-12 px-4 text-left align-middle border-b font-medium text-slate-700 dark:text-zinc-300 dark:bg-zinc-800 dark:border-zinc-600 flex items-center justify-between">
 					<div className="mr-2">
 						<EditableText
-							initialText={name}
 							columnId={columnId}
-							name={name}
+							setText={setText}
+							text={text}
 						/>
 					</div>
 					<div className="ml-auto flex items-center">
@@ -51,7 +52,12 @@ const KanbanColumn: FC<KanbanColumnProps> = ({
 						/>
 					</div>
 					<div className="ml-2 flex items-center">
-						<EditColumn columnId={columnId} setColumns={setColumns} />
+						<EditColumn
+							columnId={columnId}
+							setColumns={setColumns}
+							setText={setText}
+							text={text}
+						/>
 					</div>
 				</div>
 			</header>
