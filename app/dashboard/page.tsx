@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { getProjects } from "../utils/supabase-request";
-import CreateProjectCard from "../components/ui/create-project-card";
-import ProjectCard from "../components/ui/project-card";
+import CreateProjectCard from "../components/layout/kanban/project/create-project-card";
+import ProjectCard from "../components/layout/kanban/project/project-card";
 import { Skeleton } from "../components/ui/skeleton";
 
 export default function Dashboard() {
