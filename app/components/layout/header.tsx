@@ -45,7 +45,7 @@ function Header() {
 				)}
 
 				{isSignedIn && (
-					<div className="flex flex-row items-center">
+					<div className="flex flex-row items-center gap-3">
 						<Link href="/dashboard">
 							<Button variant="link">Dashboard</Button>
 						</Link>
