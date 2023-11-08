@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as z from "zod";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider, useFormContext, set } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -43,32 +43,38 @@ const formSchema = z.object({
 export default function ModalEditProject({
 	slug,
 	setProjects,
-	projects,
+	setOpen,
+	projectName,
+	projectDescription,
 }: {
 	slug: string;
 	setProjects: (projects: any) => void;
-	projects: ProjectType[];
+	setOpen: (open: boolean) => void;
+	projectName: string;
+	projectDescription: string;
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
-			projectName: "",
-			projectDescription: "",
-		},
 	});
+
+	useEffect(() => {
+		form.setValue("projectName", projectName);
+		form.setValue("projectDescription", projectDescription);
+	}, [projectName, projectDescription, form]);
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const result = formSchema.safeParse(values);
-		if (!result.success) {
-			console.log("Error submitting form", result.error);
-		} else {
-			console.log("Form submitted", result.data);
-		}
 		console.log(values);
 		console.log(userId);
 		editProject();
+
+		if (result.success) {
+			setOpen(false);
+		} else {
+			setOpen(true);
+		}
 
 		try {
 			form.reset({
@@ -77,6 +83,7 @@ export default function ModalEditProject({
 			});
 		} catch (error) {
 			console.error(error);
+			console.log("hei");
 		}
 	}
 
@@ -163,9 +170,7 @@ export default function ModalEditProject({
 							)}
 						/>
 						<DialogFooter className="flex w-full justify-end">
-							<DialogPrimitive.Close asChild>
-								<Button type="submit">Edit project</Button>
-							</DialogPrimitive.Close>
+							<Button type="submit">Edit project</Button>
 						</DialogFooter>
 					</form>
 				</Form>
