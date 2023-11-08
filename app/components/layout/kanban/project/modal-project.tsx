@@ -46,9 +46,11 @@ const formSchema = z.object({
 export default function ProjectModal({
 	setProjects,
 	projects,
+	setOpen,
 }: {
 	setProjects: (projects: any) => void;
 	projects: ProjectType[];
+	setOpen: (open: boolean) => void;
 }) {
 	const { toast } = useToast();
 	const { userId, getToken } = useAuth();
@@ -63,9 +65,16 @@ export default function ProjectModal({
 	const date = new Date();
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
+		const result = formSchema.safeParse(values);
 		console.log(values);
 		console.log(userId);
 		newProject();
+
+		if (result.success) {
+			setOpen(false);
+		} else {
+			setOpen(true);
+		}
 
 		try {
 			form.reset({
@@ -159,9 +168,7 @@ export default function ProjectModal({
 							)}
 						/>
 						<DialogFooter className="flex w-full justify-end">
-							<DialogPrimitive.Close asChild>
-								<Button type="submit">Create project</Button>
-							</DialogPrimitive.Close>
+							<Button type="submit">Create project</Button>
 						</DialogFooter>
 					</form>
 				</Form>
