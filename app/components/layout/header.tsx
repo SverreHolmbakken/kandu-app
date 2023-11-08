@@ -1,6 +1,6 @@
 "use client";
 
-import { ClerkLoaded, ClerkLoading, UserButton, useAuth } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, OrganizationSwitcher, UserButton, useAuth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
@@ -55,6 +55,7 @@ function Header() {
 						</ClerkLoading>
 
 						<ClerkLoaded>
+							<OrganizationSwitcher />
 							<UserButton afterSignOutUrl="/" />
 						</ClerkLoaded>
 					</div>
