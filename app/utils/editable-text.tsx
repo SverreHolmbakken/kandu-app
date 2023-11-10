@@ -34,9 +34,9 @@ export default function EditableText({ columnId, setText, text }: any) {
 	};
 
 	const handleBlur = async () => {
-		setIsEditing(false);
 		// This is where the input value gets sent to the database
-		updateColumnName(columnId);
+		await updateColumnName(columnId);
+		setIsEditing(false);
 	};
 
 	return (

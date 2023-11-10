@@ -1,11 +1,6 @@
-import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardDescription,
-	CardContent,
-	CardFooter,
-} from "../../../ui/card";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { Card, CardHeader, CardTitle, CardContent } from "../../../ui/card";
 import TaskOptions from "./task-options";
 
 export type TaskProps = {
@@ -13,14 +8,49 @@ export type TaskProps = {
 	id?: number;
 	title?: string;
 	description?: string;
-	setTasks: React.Dispatch<React.SetStateAction<any[]>>;
+	setTasks?: React.Dispatch<React.SetStateAction<any[]>>;
 };
-
 export default function Task({ task, setTasks }: TaskProps) {
+	const {
+		setNodeRef,
+		attributes,
+		listeners,
+		transform,
+		transition,
+		isDragging,
+	} = useSortable({
+		id: task.task_id,
+		data: {
+			type: "Task",
+			task,
+		},
+	});
+
+	const style = {
+		transition,
+		transform: CSS.Transform.toString(transform),
+	};
+
+	if (isDragging) {
+		return (
+			<div
+				ref={setNodeRef}
+				style={style}
+				className="cursor-grab rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
+			/>
+		);
+	}
+
 	return (
-		<Card className="w-full">
+		<Card
+			ref={setNodeRef}
+			style={style}
+			{...attributes}
+			{...listeners}
+			className="w-full hover:border-2"
+		>
 			<CardHeader>
-				<CardTitle className="">
+				<CardTitle>
 					<div className="flex items-center justify-between text-base">
 						<div className="flex items-center">
 							<div className="mr-2">{task.title}</div>

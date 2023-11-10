@@ -23,6 +23,7 @@ export type ColumnType = {
 	column_name: string;
 	project_id: number;
 	created_at: string;
+	order?: number;
 };
 
 export type ProjectType = {
