@@ -30,6 +30,7 @@ function KanbanColumn({ name, columnId, setColumns }: KanbanColumnProps) {
 		id: columnId,
 		data: {
 			type: "Column",
+			columnId,
 		},
 	});
 
