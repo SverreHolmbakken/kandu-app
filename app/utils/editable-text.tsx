@@ -25,8 +25,6 @@ export default function EditableText({ initialText, columnId }: any) {
 		});
 	};
 
-	console.log(text);
-
 	const handleDoubleClick = () => {
 		console.log("double clicked");
 		setIsEditing(true);
