@@ -36,7 +36,7 @@ export default function Task({ task, setTasks }: TaskProps) {
 			<div
 				ref={setNodeRef}
 				style={style}
-				className="rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
+				className="cursor-grab rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
 			/>
 		);
 	}
