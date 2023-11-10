@@ -25,6 +25,8 @@ export default function EditableText({ initialText, columnId }: any) {
 		});
 	};
 
+	console.log(text);
+
 	const handleDoubleClick = () => {
 		console.log("double clicked");
 		setIsEditing(true);
@@ -35,9 +37,9 @@ export default function EditableText({ initialText, columnId }: any) {
 	};
 
 	const handleBlur = async () => {
-		setIsEditing(false);
 		// This is where the input value gets sent to the database
-		updateColumnName(columnId);
+		await updateColumnName(columnId);
+		setIsEditing(false);
 	};
 
 	return (
