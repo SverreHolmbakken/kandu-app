@@ -85,7 +85,7 @@ export const getProjects = async ({
 	const { data: projects } = await supabase
 		.from("projects")
 		.select()
-		.contains("accessed_by", [userId, userId ?? ""]);
+		.eq("accessed_by", userId);
 	return projects;
 };
 
@@ -111,6 +111,7 @@ export const getColumnsBySlug = async ({
 	const { data: columns } = await supabase
 		.from("columns")
 		.select("*")
+		.order("order", { ascending: true })
 		.eq("project_id", project.id);
 	// .contains("accessed_by", [userId, userId ?? ""]);
 	return columns;
@@ -207,21 +208,30 @@ export const updateColumn = async ({
 	column: {
 		name: string;
 		id: string;
+		order?: number;
 	};
 }) => {
 	const supabase = await supabaseClient(token);
+
+	// Log the column object before the update
+	console.log("Column before update:", column);
+
 	const { data: updateColumn, error } = await supabase
 		.from("columns")
-		.update({ column_name: column.name })
+		.update({ column_name: column.name, order: column.order })
 		.eq("column_id", column.id)
 		.select();
+
 	if (error) {
 		console.log(error);
 		return false;
 	}
+
+	// Log the updated column data
+	console.log("Updated column data:", updateColumn);
+
 	return updateColumn;
 };
-
 export const deleteColumn = async ({
 	token,
 	columnId,
@@ -230,6 +240,7 @@ export const deleteColumn = async ({
 	columnId: string;
 }) => {
 	const supabase = await supabaseClient(token);
+
 	const { data, error } = await supabase
 		.from("columns")
 		.delete()
