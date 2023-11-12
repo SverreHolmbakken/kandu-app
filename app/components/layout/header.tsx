@@ -1,13 +1,20 @@
 "use client";
 
-import { ClerkLoaded, ClerkLoading, OrganizationSwitcher, UserButton, useAuth } from "@clerk/nextjs";
+import {
+	ClerkLoaded,
+	ClerkLoading,
+	OrganizationSwitcher,
+	UserButton,
+	useAuth,
+} from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 import { ModeToggle } from "./themebutton";
 
 function Header() {
-	const { isSignedIn } = useAuth();
+	const { isSignedIn, userId, orgId } = useAuth();
+	console.log(userId, orgId);
 
 	const windowsScrollbar = () => {
 		const windows = /(Win32|Win64|Windows|WinCE)/i.test(navigator.platform);

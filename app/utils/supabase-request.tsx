@@ -29,18 +29,18 @@ export const postProject = async ({
 	project,
 	userId,
 }: {
-	userId?: string[];
+	userId?: any;
 	token: string;
 	project: {
 		name: string;
-		accessed_by: string[];
+		accessed_by: string | null | undefined;
 	};
 }) => {
 	const supabase = await supabaseClient(token);
 	const { data: newProject, error } = await supabase.from("projects").insert([
 		{
 			...project,
-			accessed_by: [...project.accessed_by, ...(userId ?? [])],
+			accessed_by: userId ?? "",
 		},
 	]);
 	if (error) {
@@ -75,17 +75,18 @@ export const postColumn = async ({
 };
 
 export const getProjects = async ({
-	userId,
+	id,
 	token,
 }: {
-	userId: string;
+	id: any;
 	token: string;
 }) => {
 	const supabase = await supabaseClient(token);
 	const { data: projects } = await supabase
 		.from("projects")
 		.select()
-		.contains("accessed_by", [userId, userId ?? ""]);
+		.eq("accessed_by", id)
+		.order("created_at", { ascending: true });
 	return projects;
 };
 

@@ -6,13 +6,23 @@ import { getProjects } from "../utils/supabase-request";
 import CreateProjectCard from "../components/layout/kanban/project/create-project-card";
 import ProjectCard from "../components/layout/kanban/project/project-card";
 import { Skeleton } from "../components/ui/skeleton";
+import { useOrganization } from "@clerk/nextjs";
 
 export default function Dashboard() {
-	const { userId, getToken } = useAuth();
+	const { orgId, userId, getToken } = useAuth();
+	const { organization } = useOrganization();
 
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [cardColor, setCardColor] = useState<string>("");
 	const [loading, setLoading] = useState(true);
+
+	function accessId() {
+		if (!orgId) {
+			return userId;
+		} else {
+			return orgId;
+		}
+	}
 
 	interface Project {
 		id: number;
@@ -26,10 +36,11 @@ export default function Dashboard() {
 	}
 
 	useEffect(() => {
+		setLoading(true);
 		const loadProject = async () => {
 			const token = await getToken({ template: "supabase" });
 			const projects = (await getProjects({
-				userId: userId ?? "",
+				id: accessId(),
 				token: token ?? "",
 			})) as Project[];
 			console.log(projects);
@@ -42,13 +53,14 @@ export default function Dashboard() {
 			}
 		};
 		loadProject();
-	}, []);
+	}, [orgId, userId]);
 
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
 			<main className="flex h-full flex-col text-primaryDark dark:text-zinc-200">
 				<h1 className="w-full text-extraLargeFont py-largePadding">
-					Projects
+					{accessId() == orgId ? `${organization?.name} ` : "Personal "}
+					projects
 				</h1>
 				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{loading ? (

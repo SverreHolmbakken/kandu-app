@@ -22,6 +22,7 @@ export default function About() {
 						linkedin={author.linkedin}
 						cv={author.cv}
 						mail={author.mail}
+						key={author.name}
 					/>
 				))}
 			</div>
