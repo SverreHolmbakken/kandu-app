@@ -28,7 +28,7 @@ export type ColumnType = {
 export type ProjectType = {
 	name: string;
 	description: string;
-	accessed_by: string[];
+	accessed_by: string | null | undefined;
 	owner_id: string;
 	card_color: string;
 	slug: string;

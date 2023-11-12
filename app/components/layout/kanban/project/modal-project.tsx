@@ -53,7 +53,7 @@ export default function ProjectModal({
 	setOpen: (open: boolean) => void;
 }) {
 	const { toast } = useToast();
-	const { userId, getToken } = useAuth();
+	const { userId, orgId, getToken } = useAuth();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -67,7 +67,6 @@ export default function ProjectModal({
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const result = formSchema.safeParse(values);
 		console.log(values);
-		console.log(userId);
 		newProject();
 
 		if (result.success) {
@@ -97,10 +96,17 @@ export default function ProjectModal({
 
 	const newProject = async () => {
 		const { projectName, projectDescription } = form.getValues();
+		function accessId() {
+			if (!orgId) {
+				return userId;
+			} else {
+				return orgId;
+			}
+		}
 		const project: ProjectType = {
 			name: projectName,
 			description: projectDescription,
-			accessed_by: [userId ?? ""],
+			accessed_by: accessId(),
 			owner_id: userId ?? "",
 			card_color: RandomHexColor(),
 			slug: uuidv4(),
@@ -110,6 +116,7 @@ export default function ProjectModal({
 		const postNewProject = await postProject({
 			token: token ?? "",
 			project: project,
+			userId: accessId(),
 		});
 		setProjects([...projects, project]);
 		toast({
