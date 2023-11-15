@@ -47,6 +47,12 @@ module.exports = {
 				largePadding: "2rem",
 				extraLargePadding: "7rem",
 			},
+			margin: {
+				smallMargin: "1rem",
+				mediumMargin: "1.5rem",
+				largeMargin: "2rem",
+				extraLargeMargin: "7rem",
+			},
 			fontSize: {
 				smallFont: "0.8rem",
 				mediumFont: "1rem",
