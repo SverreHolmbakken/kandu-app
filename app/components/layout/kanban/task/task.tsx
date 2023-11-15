@@ -36,9 +36,11 @@ export default function Task({ task, setTasks }: TaskProps) {
 					</div>
 				</CardTitle>
 			</CardHeader>
-			<CardContent>
-				<p>{task.description}</p>
-			</CardContent>
+			{task.description && (
+				<CardContent>
+					<p>{task.description}</p>
+				</CardContent>
+			)}
 		</Card>
 	);
 }
