@@ -37,6 +37,7 @@ import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
 import { postProject } from "@/app/utils/supabase-request";
 import { ProjectType } from "@/Types";
+import { useAccessId } from "@/app/utils/access-id";
 
 const formSchema = z.object({
 	projectName: z.string().min(1).max(30),
@@ -53,7 +54,8 @@ export default function ProjectModal({
 	setOpen: (open: boolean) => void;
 }) {
 	const { toast } = useToast();
-	const { userId, orgId, getToken } = useAuth();
+	const { getToken } = useAuth();
+	const accessId = useAccessId();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -96,18 +98,12 @@ export default function ProjectModal({
 
 	const newProject = async () => {
 		const { projectName, projectDescription } = form.getValues();
-		function accessId() {
-			if (!orgId) {
-				return userId;
-			} else {
-				return orgId;
-			}
-		}
+
 		const project: ProjectType = {
 			name: projectName,
 			description: projectDescription,
-			accessed_by: accessId(),
-			owner_id: userId ?? "",
+			accessed_by: accessId,
+			owner_id: accessId ?? "",
 			card_color: RandomHexColor(),
 			slug: uuidv4(),
 			created_at: date.toISOString(),
@@ -116,7 +112,7 @@ export default function ProjectModal({
 		const postNewProject = await postProject({
 			token: token ?? "",
 			project: project,
-			userId: accessId(),
+			userId: accessId,
 		});
 		setProjects([...projects, project]);
 		toast({

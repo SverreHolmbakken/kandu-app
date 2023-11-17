@@ -34,7 +34,7 @@ import {
 } from "@/app/components/ui/form";
 import { Textarea } from "@/app/components/ui/textarea";
 import { useAuth } from "@clerk/nextjs";
-import { postTask, updateColumn } from "@/app/utils/supabase-request";
+import { updateColumn } from "@/app/utils/supabase-request";
 
 const formSchema = z.object({
 	columnName: z.string().min(1).max(30),

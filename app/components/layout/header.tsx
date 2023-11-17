@@ -13,8 +13,7 @@ import Link from "next/link";
 import { ModeToggle } from "./themebutton";
 
 function Header() {
-	const { isSignedIn, userId, orgId } = useAuth();
-	console.log(userId, orgId);
+	const { isSignedIn } = useAuth();
 
 	const windowsScrollbar = () => {
 		const windows = /(Win32|Win64|Windows|WinCE)/i.test(navigator.platform);

@@ -7,22 +7,15 @@ import CreateProjectCard from "../components/layout/kanban/project/create-projec
 import ProjectCard from "../components/layout/kanban/project/project-card";
 import { Skeleton } from "../components/ui/skeleton";
 import { useOrganization } from "@clerk/nextjs";
+import { useAccessId } from "../utils/access-id";
 
 export default function Dashboard() {
 	const { orgId, userId, getToken } = useAuth();
 	const { organization } = useOrganization();
 
 	const [projects, setProjects] = useState<Project[]>([]);
-	const [cardColor, setCardColor] = useState<string>("");
 	const [loading, setLoading] = useState(true);
-
-	function accessId() {
-		if (!orgId) {
-			return userId;
-		} else {
-			return orgId;
-		}
-	}
+	const accessId = useAccessId();
 
 	interface Project {
 		id: number;
@@ -40,7 +33,7 @@ export default function Dashboard() {
 		const loadProject = async () => {
 			const token = await getToken({ template: "supabase" });
 			const projects = (await getProjects({
-				id: accessId(),
+				id: accessId,
 				token: token ?? "",
 			})) as Project[];
 			console.log(projects);
@@ -48,7 +41,6 @@ export default function Dashboard() {
 				setLoading(false);
 			} else if (projects !== null) {
 				setProjects(projects);
-				setCardColor(projects[0].card_color);
 				setLoading(false);
 			}
 		};
@@ -62,7 +54,7 @@ export default function Dashboard() {
 					<Skeleton className="h-10 w-60 my-largeMargin" />
 				) : (
 					<h1 className="w-full text-extraLargeFont py-largePadding">
-						{accessId() == orgId ? `${organization?.name} ` : "Personal "}
+						{accessId == orgId ? `${organization?.name} ` : "Personal "}
 						projects
 					</h1>
 				)}
