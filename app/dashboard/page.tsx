@@ -58,10 +58,15 @@ export default function Dashboard() {
 	return (
 		<div className="flex h-screen flex-col justify-between lg:px-36 md:px-8 px-1 m-auto">
 			<main className="flex h-full flex-col text-primaryDark dark:text-zinc-200">
-				<h1 className="w-full text-extraLargeFont py-largePadding">
-					{accessId() == orgId ? `${organization?.name} ` : "Personal "}
-					projects
-				</h1>
+				{loading ? (
+					<Skeleton className="h-10 w-60 my-largeMargin" />
+				) : (
+					<h1 className="w-full text-extraLargeFont py-largePadding">
+						{accessId() == orgId ? `${organization?.name} ` : "Personal "}
+						projects
+					</h1>
+				)}
+
 				<div className="grid grid-cols-1 grid-flow-row auto-cols-max gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{loading ? (
 						<Skeleton className="h-80" />
