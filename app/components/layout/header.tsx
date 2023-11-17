@@ -15,16 +15,6 @@ import { ModeToggle } from "./themebutton";
 function Header() {
 	const { isSignedIn } = useAuth();
 
-	const windowsScrollbar = () => {
-		const windows = /(Win32|Win64|Windows|WinCE)/i.test(navigator.platform);
-		if (windows) {
-			const htmlElement = document.documentElement;
-			htmlElement.classList.add("windows");
-		}
-	};
-
-	windowsScrollbar();
-
 	return (
 		<div className="flex flex-row w-full justify-between items-center py-2 lg:px-36 md:px-8 px-1 bg-slate-50 dark:bg-zinc-950">
 			<Link href="/" className="flex flex-row items-center gap-6">
