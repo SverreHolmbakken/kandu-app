@@ -36,7 +36,6 @@ export default function Dashboard() {
 				id: accessId,
 				token: token ?? "",
 			})) as Project[];
-			console.log(projects);
 			if (projects.length === 0) {
 				setLoading(false);
 			} else if (projects !== null) {
