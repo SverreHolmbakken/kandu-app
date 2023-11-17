@@ -37,6 +37,7 @@ import { useAuth } from "@clerk/nextjs";
 import { postTask } from "@/app/utils/supabase-request";
 import { TaskType } from "@/Types";
 import { v4 as uuidv4 } from "uuid";
+import { useAccessId } from "@/app/utils/access-id";
 
 const formSchema = z.object({
 	taskId: z.string(),
@@ -55,7 +56,8 @@ export default function CreateTaskModal({
 	tasks: TaskType[];
 }) {
 	const { toast } = useToast();
-	const { userId, getToken } = useAuth();
+	const { getToken } = useAuth();
+	const accessId = useAccessId();
 
 	const [open, setOpen] = React.useState(false);
 
@@ -72,7 +74,6 @@ export default function CreateTaskModal({
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const result = formSchema.safeParse(values);
 		console.log(values);
-		console.log(userId);
 		newTask();
 
 		if (result.success) {
@@ -110,7 +111,7 @@ export default function CreateTaskModal({
 		};
 		const token = await getToken({ template: "supabase" });
 		const postNewTask = await postTask({
-			userId: userId ?? "",
+			userId: accessId ?? "",
 			token: token ?? "",
 			task: task,
 		});

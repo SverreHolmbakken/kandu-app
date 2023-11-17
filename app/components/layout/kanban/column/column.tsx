@@ -31,8 +31,6 @@ const KanbanColumn: FC<KanbanColumnProps> = ({
 		loadTasks();
 	}, []);
 
-	console.log(tasks, "tasks");
-
 	return (
 		<div className="rounded-md border w-1/4 min-w-[350px] h-full overflow-hidden dark:border-zinc-600">
 			<header className="bg-slate-50 sticky top-0 z-10">

@@ -41,7 +41,6 @@ const Page: FC<Props> = ({ params }) => {
 		};
 		loadColumns();
 	}, []);
-	console.log(columns, "columns");
 
 	useEffect(() => {
 		const loadProject = async () => {
@@ -51,7 +50,6 @@ const Page: FC<Props> = ({ params }) => {
 				token: token ?? "",
 				slug: params.slug,
 			});
-			console.log(project);
 			setProject(project || []);
 			setLoading(false);
 		};
